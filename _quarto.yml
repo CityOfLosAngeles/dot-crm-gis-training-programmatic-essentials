@@ -1,0 +1,26 @@
+project:
+  type: book
+
+book:
+  title: "Programmatic Data Processing Essentials for GIS Specialists"
+  author: "LADOT Commerical Rideshare & Mobility"
+  date: today
+  chapters:
+    - index.qmd
+    - installation.qmd
+    # - r-projects.qmd
+    # - intro-r-programming.qmd
+    # - cleaning-and-wrangling.qmd
+    # - data-viz-ggplot2.qmd
+    # - resources.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  # pdf:
+  #   documentclass: scrreprt
+
+
+

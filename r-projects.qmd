@@ -1,0 +1,201 @@
+# R Projects 
+
+::: {.callout-note title="Acknowledgements" collapse=true}
+Lesson is based on the National Center for Ecological Analysis & Synthesis (NCEAS) Learning Hub's [coreR Course](https://learning.nceas.ucsb.edu/2023-10-coreR/){target="_blank"} and Allison Horst's EDS 221 Scienfitic Programming la la la
+:::
+
+## How Code Finds Stuff (From Data to Files to Images) {.unnumbered}
+
+There are two types of paths in computing: **absolute paths** and **relative paths**.
+
+An **absolute path** is the **full path** to a file or directory, starting from the root directory of the file system. It tells the system exactly where a file or folder is located, no matter where you are in the file structure.
+
+- On Windows, the absolute path starts with a drive letter: `C:\Users\Halina\Documents\training\data\raw_data.csv`
+- On Unix/Linux/macOS, the absolute path starts with a root: `/home/halina/projects/training/data/raw_data.csv`
+
+A **relative path** specifies a file or directory location in relation to the **current working directory** (where you are in the file system when running the command or script).
+
+- It doesn’t start with the root or a drive letter
+- It’s flexible depending on where your program or terminal session is running
+- If you’re currently in `C:\Users\Halina\Documents\training`, the relative path to the raw data file might be: `\data\raw_data.csv`
+
+::: {.callout-important title="Absolute File Paths can break!"}
+
+```{r}
+#| eval: false
+
+library(readr) # load data
+raw_data <- readr::read_csv("/home/halina/projects/training/data/raw_data.csv")
+```
+
+How would this code break?
+
+- **If I was on a different computer or switched user accounts on the same computer.** `/home/halina/...` is an absolute path specific to MY user account on MY computer. Another computer likely won’t have that same directory structure or username. Other users will have their own home directories, like `/home/otheruser/`, and won’t be able to access files in my home folder.
+- **If I moved `raw_data.csv` to a different location on the same computer.** Since the path is hardcoded, the code can't find the file anymore unless I update the path to reflect the new location.
+- **If I shared this with a collaborator.** My collaborators would not be able to run it because they don't have `/home/halina/` on their computers.
+- **If I shared this with someone on a Windows computer.**  It may break because absolute file paths are formatted differently across operating systems. My Mac uses `/Users/...` or `/home/...`, while Windows uses `C:/Users/...`, so the hardcoded path wouldn’t exist on their system.
+
+:::
+
+
+::: {.callout-warning icon=false collapse=true title="Exercise 1"}
+**Let's practice making some file paths!**
+
+Consider the R Project below and answer the following questions:
+
+- If our starting point is `scripts`, what is the file path to `raw_spatial.shp`?
+- If our starting point is `docs`, what is the file path to `clean_data.csv`?
+- If our starting point is `training`, what is the file path to `raw_data.csv`?
+
+*Note: To move up one level in the folder hierarchy, use `..` in the file path.*
+
+```{r}
+#| echo: false
+
+knitr::include_graphics("images/exercise_file_paths.png")
+```
+
+<details>
+<summary>Answer:</summary>
+- `scripts\..\training\data\raw\spatial.shp`
+- `docs\..\training\data\processed\clean_data.csv`
+- `training\data\raw\raw_data.csv`
+</details>
+
+:::
+
+## Robust File Paths Using R Projects & the `here` package {.unnumbered}
+
+::: {.callout-note appearance="minimal"}
+An **R project** is a directory (folder) on our local computer, which allows us to work in a self-contained space, streamlines the organization of our work and facilitates collaboration with others.
+:::
+
+::: {.columns}
+
+::: {.column width="65%"}
+When you create an R Project, it sets up a dedicated folder (directory) for your work and creates a hidden file with a `.Rproj` extension. When you open the project in RStudio, R automatically sets the working directory to this folder (your project’s **“home base”**) making it easy to organize and reference all your code, data, and outputs.
+:::
+
+::: {.column width="5%"}
+
+:::
+
+::: {.column width="30%"}
+```{r}
+#| echo: false
+knitr::include_graphics("images/rproj.png")
+```
+:::
+
+:::
+
+
+
+::: {.columns} 
+
+::: {.column width="40%"}
+[![Artwork by Allison Horst](images/here_package_ah.png)](https://here.r-lib.org/){target="_blank"}
+:::
+
+::: {.column width="55%"}
+While R Projects and the `.Rproj` file enable the use of relative paths, they don't address *all* potential issues with breakable file paths. One challenge when working across different operating systems (Windows, macOS, or Linux) is that file paths can be formatted differently. Windows uses backslashes (`\`), while Unix-like systems (macOS/Linux) use forward slashes (`/`). Also, absolute file paths are tied to *your* machine's file structure, so code that works on your computer might break on someone else's.
+:::
+
+:::
+
+The [`here`](https://here.r-lib.org/) package helps solve this by **constructing file paths relative to your project directory—regardless of your operating system**. This makes your code more portable and reproducible.
+
+```{r}
+#| eval: false
+
+library(readr) # load data
+library(here)
+
+# avoid absolute paths that only work on your computer
+raw_data <- read_csv("C:\Users\Halina\Documents\training\data\raw_data.csv")
+
+# avoid fragile relative paths like this
+raw_data <- read_csv("data\raw_data.csv")
+
+# use here::here() for robust, OS-agnostic paths
+raw_data <- read_csv(here::here("data", "raw_data.csv"))
+```
+
+::: {.callout-warning icon=false collapse=true title="Exercise 2"}
+**Let’s practice creating file paths using `here::here()`!**
+
+Consider the R Project below, answer the following questions:
+
+- If our starting point is `scripts`, what is the file path to `raw_spatial.shp`?
+- If our starting point is `docs`, what is the file path to `clean_data.csv`?
+- If our starting point is `training`, what is the file path to `raw_data.csv`?
+
+*Note: `here::here()` builds file paths relative to the root of your R Project. In this case, the root is `training\`.*
+
+```{r}
+#| echo: false
+
+knitr::include_graphics("images/exercise_file_paths.png")
+```
+
+<details>
+<summary>Answer:</summary>
+The relative paths:
+
+- `data\raw\spatial.shp`
+- `data\processed\clean_data.csv`
+- `data\raw\raw_data.csv`
+
+Using `here()`:
+
+- `here("data", "raw", "spatial.shp")`
+- `here("data", "processed", "clean_data.csv")`
+- `here("data", "raw", "raw_data.csv")`
+</details>
+
+:::
+
+
+## Let's Create an R Project {.unnumbered}
+
+::: {.callout-warning icon=false title="Steps to Create an R Project"}
+
+1. In the “File” menu, select “New Project”
+2. Click “New Directory”
+3. Click “New Project”
+4. Under “Directory name” type: `r_training_{LAST_NAME}` (i.e. `r_training_do-linh`)
+5. Leave “Create Project as subdirectory of:” set to `~` (the tilde means "home")
+6. Click “Create Project”
+
+RStudio should open your new project automatically after creating it. One way to check this is by looking at the top right corner and checking for the project name.
+
+:::
+
+
+## R Project Organization {.unnumbered}
+
+A consistent folder structure makes it easier to reproduce work and collaborate with others. While directory organization can vary depending on the project, some common directories include:
+
+::: {.columns}
+
+::: {.column width="55%"}
+- `data`: Stores datasets. This folder often contains subdirectories such as:
+    - `raw`: unaltered, original data files
+    - `processed`: cleaned or transformed datasets
+    - `metadata`: information describing the data (e.g., data dictionaries)
+- `R` or `scripts`: Contains code for data cleaning, wrangling, or analysis. Some projects prefer `scripts` if they use multiple programming languages beyond R.
+- `plots` or `figs`: Stores generated visualizations like plots, graphs, or figures.
+- `docs`: Includes reports, project summaries, or other documentation relevant to the analysis.
+
+:::
+
+::: {.column width="45%"}
+```{r}
+#| echo: false
+knitr::include_graphics("images/rproj-basic-organization.png")
+```
+:::
+
+The key is to be consistent and intentional in your organization so others (and future-you) can easily understand and reuse your work.
+
+:::

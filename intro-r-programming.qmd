@@ -1,0 +1,340 @@
+---
+title: "Intro to R Programming"
+format:
+  html:
+    number-sections: false
+---
+
+## Tour of RStudio
+
+::: {.callout-tip title="R vs RStudio: What’s the Difference?"}
+**R** is a **programming language** used for statistical computing and data analysis. It provides the core functions and packages needed to perform tasks like data wrangling, modeling, and visualization.
+
+**RStudio**, is an **Integrated Development Environment (IDE)** for R. It offers a user-friendly interface with tools like a script editor, console, environment viewer, and built-in plotting pane, which make coding in R more efficient and organized.
+:::
+
+When you first open RStudio, you'll see the following panes:
+
+```{r}
+#| echo: false
+#| fig-align: center
+
+knitr::include_graphics("images/windows-rstudio.png")
+```
+
+-   Left Pane: The **Console** is where R executes your code. You can enter commands directly for immediate feedback, making it ideal for testing individual lines of code, inspecting data structures, or running quick calculations during exploratory data analysis.
+-   Top-Right: The **Environment** pane provides a real-time overview of the objects currently stored in your R session, including datasets, functions, and variables. It allows you to monitor your workspace as it evolves and serves as a helpful reference when managing data throughout your workflow.
+-   Bottom-Right: The **Tools** multipurpose pane gives access to a range of utilities: data visualizations (Plots), your working directory (Files), package documentation and function references (Help), and output previews from R Markdown documents or Shiny applications (Viewer). It is especially useful when combining scripting with documentation or interactive tools.
+-   Top-Left: The **Source** pane is where you develop and edit your code and documentation. It supports a variety of file types, including R scripts (`.R`), R Markdown (`.Rmd`), Quarto documents (`.qmd`), and Jupyter Notebooks (`.ipynb`). This pane allows for building reproducible workflows, writing narrative reports that integrate code and results, or developing interactive notebooks for teaching and analysis. Its tabbed interface allows for easy navigation between multiple files. Note: We don't see this pane open in this screenshot, but that's because we don't have any files open yet!
+
+## Coding in the Console
+
+::: {.callout-important title="But first, an important question: where are we?"}
+When you first open RStudio, you're placed in your Home directory. You’ll notice this location indicated by the tilde symbol (`~`) at the top of the Console. This symbol is shorthand for your user’s home folder and is the starting point for your R session.
+
+In the Files pane (bottom-right), you’ll see a visual representation of the contents of your Home directory. You can click through folders and browse your file system from here. However, it’s **important to understand that navigating through the Files pane doesn’t change your working directory in R**. In other words, no matter how deep you click into subfolders, R will still consider your location to be `~` until you explicitly tell it otherwise by opening an R Project.
+:::
+
+At its most basic, we can use R as a calculator:
+
+```{r}
+#| eval: false
+# run each expression in the Console
+2 + 5
+400 / 10
+(6 - 1 + 8) / 3
+sin(pi / 2)
+```
+
+Use the up arrow key to bring back the last code we ran in the Console, in this case: `sin(pi / 2)`. Delete the closing parenthesis and notice what happens.
+
+```{r}
+#| eval: false
+> sin(pi / 2
++
+```
+
+The Console has changed the prompt from `>` to `+`. This means R is waiting for more input to complete the command. We often see this when we forget to close a parenthesis, quote, or bracket.
+
+To fix this, we can either:
+
+-   Finish the command by typing the closing parenthesis and pressing Enter, or
+-   Press Esc to cancel the incomplete command and return to the standard prompt (`>`).
+
+The `+` prompt is a helpful clue when debugging code as it usually means R is expecting more syntax to complete the command.
+
+### Creating Objects in R with the Assignment Operator (`<-`) {.unnumbered}
+
+In R, most of the time you’ll be creating objects and this is done using assignment statements using the assignment operator, `<-`.
+
+```{r}
+#| eval: false
+
+# run this code in the Console
+# human translation of this code: "object x gets value of 3 * 4"
+x <- 3 * 4
+
+# after you hit Enter, what happened?
+# call "x" to view the value you've assigned it
+```
+
+Assignment statements follow a consistent pattern:
+
+```{r}
+#| eval: false
+object_name <- value
+```
+
+You’ll write a lot of assignments, so it’s worth getting comfortable with this syntax. While you can use `=` to assign values, it’s best to stick with `<-`. Using `=` can lead to confusion, especially when calling functions, where `=` is used to specify arguments.
+
+To make typing `<-` easier, use RStudio’s built-in keyboard shortcut: `Alt` + `-` (minus sign)
+
+RStudio will insert spaces around `<-` automatically, which is a great formatting habit. Clean code is easier to read - for you, your future self, and your collaborators. Let your code breathe and use spacing to make your code more understandable:
+
+```{r}
+#| eval: false
+# write your code like this
+my_value <- 5
+
+# not like this
+my_value<-5
+my_value=5
+```
+
+### Naming Things
+
+When naming objects, observations, data frames, or files make them:
+
+::: panel-tabset
+#### Meaningful
+
+```{r}
+#| echo: false
+
+knitr::include_graphics("images/1_naming_things_meaningful.png")
+```
+
+*Slide credit: Allison Horst EDS 221: Scientific programming essentials for the Bren School's Master of Environmental Data Science.*
+
+#### Consistent
+
+```{r}
+#| echo: false
+
+knitr::include_graphics("images/2_naming_things_consistent.png")
+```
+
+*Slide credit: Allison Horst EDS 221: Scientific programming essentials for the Bren School's Master of Environmental Data Science.*
+
+#### Concise
+
+```{r}
+#| echo: false
+
+knitr::include_graphics("images/3_naming_things_concise.png")
+```
+
+*Slide credit: Allison Horst EDS 221: Scientific programming essentials for the Bren School's Master of Environmental Data Science.*
+
+#### Code & Coder Friendly
+
+```{r}
+#| echo: false
+
+knitr::include_graphics("images/4_naming_things_code_coder_friendly.png")
+```
+
+*Slide credit: Allison Horst EDS 221: Scientific programming essentials for the Bren School's Master of Environmental Data Science.*
+:::
+
+## Coding in an R Script
+
+So far, we’ve been running code directly in the Console, which is great for quick experimentation. Now let’s try using an R Script instead.
+
+**An R Script is simply a plain text file where you can write and save your R code.** When you run code from an R Script in RStudio, it behaves just like typing the same commands into the Console. RStudio takes the code and sends it line by line to the Console for execution.
+
+Using an R Script is helpful for keeping your work organized, reproducible, and easy to edit or rerun later. It’s a best practice for writing and saving longer pieces of code or entire analysis workflows.
+
+::: {.callout-warning icon="false" title="Create an R Script"}
+1.  Go to the **File** menu in the top-left corner of RStudio.
+2.  Select **New File \> R Script** from the dropdown options.
+
+RStudio will automatically open a new blank R Script. You’ll notice a new pane appears above the Console - the Source pane! It's where you’ll write and edit your R code or documents. This pane only appears when you have a file open in the editor.
+
+3.  Save your new R Script by clicking **File \> Save** (or using the shortcut `Ctrl` + `S` or `Cmd` + `S` on Mac).
+4.  Name the file `intro_to_programming.R` and save it in your R Project `r_training_{LAST_NAME}`.
+:::
+
+### How to Run Code from an R Script
+
+Running code from an R Script works a little differently than running code directly in the Console - you can’t just press Return or Enter. Instead, you need to send the code from the script (in the Source pane) to the Console, where R will interpret and run it.
+
+Here are some common ways to do this:
+
+1.  **Run a single line of code:** Place cursor on the line to run, then press `Ctrl` + `Enter` (Windows) or `Command` + `Return` (Mac), or click the Run button in the top-right corner of the Source pane.
+
+2.  **Run multiple lines of code:** Highlight the block of code you want to run, then use the same shortcut (`Ctrl` + `Enter` or `Command` + `Return`), or click the Run button.
+
+3.  **To run the entire script you can either:** Press `Ctrl` + `Shift` + `Enter` (Windows) or `Command` + `Shift` + `Return` (Mac), or go to the top menu and choose Code \> Run Region \> Run All.
+
+::: {.callout-tip title="R Executes Code from Top to Bottom"}
+When you run an entire R Script, R reads it from top to bottom, line by line. This means **the order of your code matters—objects must be created before they're used, and functions must be defined before you call them.** Keeping your script well-organized and logically ordered is key to avoiding errors.
+:::
+
+### R Calculations with Objects
+
+So we know that objects are how R stores information, and we know we create objects using the assignment operator `<-`. Let’s build upon that and learn how to use an object in calculations.
+
+Imagine we hired a taxi and after the trip, paid a fare of \$18.75. Let's create an object for the taxi fare and assigned it the total fare paid.
+
+```{r}
+# total taxi fare
+taxi_fare <- 18.75
+```
+
+Now that R has `taxi_fare` saved in the Global Environment, we can run calculations with it.
+
+::: {.callout-warning icon="false" title="Exercise 1"}
+Add a 15% tip to the taxi fare total.
+
+<details>
+
+<summary>Answer:</summary>
+
+```{r}
+taxi_fare * 1.15
+```
+
+</details>
+:::
+
+You’re not limited to storing just one value in an object - **you can also store a series of values, which allows you to apply the same operation across all of them at once.** This is especially useful when working with related measurements, like a group of taxi fares.
+
+To create an object that holds multiple values, we use the `c()` function, which stands for combine or concatenate. Let’s use it to make a vector of taxi fares:
+
+```{r}
+#| output: false
+# vector of taxi fares
+taxi_fares <- c(18.75, 15.38, 20.42)
+# call object to inspect
+taxi_fares
+```
+
+*We’ll dive deeper into vectors in the upcoming [Data Structures in R](#data-structures) section.*
+
+::: {.callout-warning icon="false" title="Exercise 2"}
+Let's add a 15% trip to *all* the fares.
+
+<details>
+
+<summary>Answer:</summary>
+
+```{r}
+taxi_fares * 1.15
+```
+
+</details>
+:::
+
+What if we want to use the new values we calculated later? It would be much more efficient to save them instead of repeating the calculation each time.
+
+```{r}
+#| output: false
+# create a new object 
+fares_with_tip <- taxi_fares * 1.15
+# call `fares_with_tip` to check if the information you expect is there
+fares_with_tip
+```
+
+### Logical operators and expressions
+
+We can **ask questions about an object using logical operators and expressions**. Let’s ask some "questions" about the `taxi_fare` object we made.
+
+- `==` means "is equal to"
+- `!=` means "is" not equal to
+- `<` means "is less than"
+- `>` means "is greater than"
+- `<=` means "is less than or equal to"
+- `>=` means "is greater than or equal to"
+
+```{r}
+#| output: false
+# examples using logical operators and expressions
+taxi_fare == 18.75
+taxi_fare >= 30
+taxi_fare != 5
+```
+
+## Data Types in R
+
+| Data Type | Definition |
+|------------------------------------|------------------------------------|
+| **Logical (Boolean)** | Represents binary values, either `TRUE` or `FALSE`, with `NA` indicating missing data. |
+| **Character** | Text strings such as `"hello"`. **Factors** are a type of character, with added structure like predefined levels or an order. |
+| **Integer** | Whole numbers, created with an `L` suffix (e.g., `2L`). |
+| **Numeric (Double)** | Numbers that include decimals (e.g., `2.5`), often referred to as doubles for their higher precision. |
+
+: Common data types in R {.striped .hover tbl-colwidths="\[25,75\]"}
+
+| Data Type | Definition |
+|----|----|
+| **Complex** | This data type represents numbers that have both real and imaginary parts, such as `2 + 3i`. These are useful for mathematical computations involving complex numbers, often seen in engineering and physics. |
+| **Raw** | This type stores data as raw bytes, typically used for handling binary data or working with lower-level operations like file manipulation. |
+
+: Less common data types (we won’t be covering these data types) {.striped .hover tbl-colwidths="\[25,75\]"}
+
+**ADD TEXT ABOUT CREATING A STRING AND THEN DOING A CALCULATION WITH IT**
+
+## Data Structures in R {#data-structures}
+
+When we combine multiple values, we create **data structures**. We're going to discuss three data structures in R.
+
+1. Atomic vector: a flat sequence of values, all of the same type
+
+Properties of vectors:
+
+- Type
+- Length
+- Attributes
+
+**Vectors can only contain a single data type.** If different elements are added, the "most flexible" will be assigned to all elements in the vector. Data types from least to most flexible are: logical, integer, double, and character.
+
+```{r}
+bike <- c(TRUE, 4.5, 8L)
+bike
+class(bike)
+```
+
+2. List: is similar to a vector, but it can contain different data types.
+
+
+In R, a vector is the most fundamental and widely used data structure. Essentially, vectors are R's way of storing a collection of values or elements. For example, recall the weight_lb vector, which contained three numeric values. Each of those values belonged to the same data type, specifically "numeric."
+
+This concept of a vector that only contains elements of the same data type is referred to as an atomic vector. Atomic vectors are the most common type of vector in R, and you'll encounter them frequently.
+
+Vectors serve as the building blocks for many other data structures in R, including data frames. While we won’t dive deep into other data structures in this section, there are plenty of excellent resources available online if you're interested in learning more. A great place to start is the Vectors chapter from Advanced R by Hadley Wickham, which provides an in-depth exploration of this topic.
+
+3. DATA FRAMES
+
+- HAVE A CODE CHUNK OF A SMALL DATA FRAME
+- PRACTICE ACCESSING PARTS OF THE DF USING [] AND $
+- ASKING QUESTIONS ABOUT THE DATA FRAME USING CLASS() AND IS.NUMERIC() ETC
+
+IT'S IMPORTANT TO GET FAMILIAR WITH YOUR DATA FRAME FIRST BEFORE RUNNING ANY ANALYSIS
+
+## Functions in R
+
+- what it is
+- syntax
+- practice
+- how do I get more functions and tools? answer: packages
+
+- error messages are your friend
+
+## Best Practices
+
+```{r}
+#| echo: false
+knitr::include_graphics("images/future-you-collab-hadley-wickham-quote.png")
+```
+

@@ -1,0 +1,64 @@
+---
+title: "R & RStudio Installation Guide"
+date-modified: last-modified
+format:
+  html:
+    embed-resources: true
+    number-sections: false
+---
+
+::: {.callout-note title="Acknowledgements" collapse=true}
+This installation guide is based on the Bren School's Master of Environmental Data Science (MEDS) Program's [MEDS Computing Requirements & Software Installation Guide.](https://ucsb-meds.github.io/MEDS-installation-guide/){target="_blank"}
+:::
+
+## 1. Install R {#install-R}
+
+Visit [cloud.r-project.org](https://cloud.r-project.org/){target="_blank"} to download the most recent version of R for your operating system. At the time this guide was last updated, version 4.4.3 was the latest.
+
+## 2. Install RStudio {#install-RStudio}
+
+While R is a programming language, RStudio is a software (often referred to as an IDE, **I**ntegrated **D**evelopment **E**nvironment) that provides R programmers with a neat, easy-to-use interface for coding in R. There are a number of IDEs out there, but RStudio is arguably the best and definitely most popular among R programmers.
+
+::: {.callout-tip}
+## You need *both* R and RStudio installed
+RStudio will not work without R installed, and you won't particularly enjoy using R without having RStudio installed. Be sure to install *both*!
+
+```{r}
+#| echo: false
+#| fig-align: "center"
+
+knitr::include_graphics("images/installation_1_RStudio_to_R.png")
+```
+
+::: {.center-text .gray-text}
+Image Credit: [Exploratory Data Analysis in R](https://mgimond.github.io/ES218/){target="_blank"}, by Manny Gimond 
+:::
+:::
+
+- **New install:** To install RStudio, visit [posit.co/downloads/](https://posit.co/downloads/){target="_blank"}. Download the free (“Open Source Edition”) Desktop version for your operating system. Be sure to install the most up-to-date version available.
+
+<!---
+- **Update:** If you already have RStudio and need to update, open RStudio, and under *Help* (in the top menu), choose *Check for updates*. If you have the most recent release, it will return *No update available. You are running the most recent version of RStudio*. Otherwise, you should follow the instructions to install an updated version.
+--->
+
+- **Launch RStudio:** Ensure RStudio opens and is running properly.
+
+::: {.callout-tip collapse=true}
+## Mac Users: You may need to install command line tools and XQuartz. 
+   
+**If RStudio prompts you to install Command Line Tools upon opening, go ahead and install them.**
+
+  - **To install command line tools** (if you’re not automatically prompted), run `xcode-select --install` in the RStudio Terminal
+  - **To install XQuartz,** visit [xquartz.org](https://www.xquartz.org/){target="_blank"}
+
+*Windows users: Windows machines should already have command line tools installed, and XQuartz is only required for Macs.*
+:::
+
+<!---
+### 3. Install Quarto *if necessary* (automatically installed with RStudio) {#Quarto}
+
+Quarto is a scientific publishing tool built on Pandoc that allows R, Python, Julia, and ObservableJS users to create dynamic documents, websites, books and more.  
+
+Quarto is included with RStudio v2022.07.1+ **so there no need for a separate download/install** if you have the latest version of RStudio! You can find all releases (current, pre, and older releases) on the Quarto website [download page](https://quarto.org/docs/download/){target="_blank"}, should you want/need to reference them.
+--->
+

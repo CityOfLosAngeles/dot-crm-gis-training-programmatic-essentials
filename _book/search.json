@@ -1,0 +1,42 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Programmatic Data Processing Essentials for GIS Specialists",
+    "section": "",
+    "text": "Overview",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "index.html#overview",
+    "href": "index.html#overview",
+    "title": "Programmatic Data Processing Essentials for GIS Specialists",
+    "section": "",
+    "text": "🌟 Goal\nEquip GIS Specialists with foundational R programming skills to streamline their data cleaning and preparation, enabling more efficient workflows with ArcGIS Pro for spatial analysis and map creation.\n\n\n👩🏽‍💻 How\nParticipants will learn:\n\nHow to structure R Projects for reproducibility\nWrite R code in RStudio\nApply core tidyverse functions to clean and wrangle messy data\nExplore data visualization using ggplot2\n\nEmphasis will be placed on reshaping data into tidy data - a consistent, tabular structure that makes analysis and visualization easier, especially when working with spatial attributes in ArcGIS Pro.\n\n\n💡 Motivation\nMany GIS professionals rely on Excel or manual, one-off methods for preparing spatial data. These processes can be time-consuming, error-prone, and hard to replicate. R programming is a powerful, scriptable, and repeatable way to handle data preparation, saving time and reducing frustration while promoting reproducible workflows that align with data science best practices.",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "installation.html",
+    "href": "installation.html",
+    "title": "R & RStudio Installation Guide",
+    "section": "",
+    "text": "1. Install R\nVisit cloud.r-project.org to download the most recent version of R for your operating system. At the time this guide was last updated, version 4.4.3 was the latest.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>R & RStudio Installation Guide</span>"
+    ]
+  },
+  {
+    "objectID": "installation.html#install-RStudio",
+    "href": "installation.html#install-RStudio",
+    "title": "R & RStudio Installation Guide",
+    "section": "2. Install RStudio",
+    "text": "2. Install RStudio\nWhile R is a programming language, RStudio is a software (often referred to as an IDE, Integrated Development Environment) that provides R programmers with a neat, easy-to-use interface for coding in R. There are a number of IDEs out there, but RStudio is arguably the best and definitely most popular among R programmers.\n\n\n\n\n\n\nYou need both R and RStudio installed\n\n\n\nRStudio will not work without R installed, and you won’t particularly enjoy using R without having RStudio installed. Be sure to install both!\n\n\n\n\n\n\n\n\n\n\nImage Credit: Exploratory Data Analysis in R, by Manny Gimond\n\n\n\n\nNew install: To install RStudio, visit posit.co/downloads/. Download the free (“Open Source Edition”) Desktop version for your operating system. Be sure to install the most up-to-date version available.\n\n\n\nLaunch RStudio: Ensure RStudio opens and is running properly.\n\n\n\n\n\n\n\nMac Users: You may need to install command line tools and XQuartz.\n\n\n\n\n\nIf RStudio prompts you to install Command Line Tools upon opening, go ahead and install them.\n\nTo install command line tools (if you’re not automatically prompted), run xcode-select --install in the RStudio Terminal\nTo install XQuartz, visit xquartz.org\n\nWindows users: Windows machines should already have command line tools installed, and XQuartz is only required for Macs.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>R & RStudio Installation Guide</span>"
+    ]
+  }
+]

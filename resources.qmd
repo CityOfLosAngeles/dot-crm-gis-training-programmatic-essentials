@@ -1,0 +1,43 @@
+---
+title: "Resources"
+date-modified: last-modified
+format: 
+  html:
+    number-sections: false
+---
+
+There are *so* many resources!
+
+## Online Books
+
+- [R for Data Science (2e)](https://r4ds.hadley.nz/) by Hadley Wickham, Mine Çetinkaya-Rundel & Garrett Grolemund
+- [Python4DS](https://aeturrell.github.io/python4DS/welcome.html#) by Arthur Turrell, et al.
+- [National Center for Ecological Analysis & Snythesis (NCEAS) Training Materials Catalog](https://learning.nceas.ucsb.edu/)
+
+## Blogs, Bloggers & Papers - Oh my!
+
+- [Tidy data](https://vita.had.co.nz/papers/tidy-data.html) by Hadley Wickham published in The Journal of Statistical Software, vol. 59, 2014.
+    - [TL;DR version](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html) on the Comprehensive R Archive Network (CRAN)
+- [From Data to Viz](https://www.data-to-viz.com/#density)
+- [Color Brewer 2.0](https://colorbrewer2.org/)
+- [Sam Shanny-Csik](https://samanthacsik.github.io/)
+- [Data is Plural](https://www.data-is-plural.com/)
+- [3 Minutes Wednesdays](https://3mw.albert-rapp.de/)
+- [Allison Horst](https://allisonhorst.com/)
+- [Alison Hill](https://www.apreshill.com/)
+- [Danielle Navarro](https://djnavarro.net/)
+- [Beatriz Milz](https://beamilz.com/about)
+
+
+## Communities
+
+- [R-Ladies Los Angeles Meetup](https://www.meetup.com/rladies-la/)
+- [Minorities in R (MiR) Slack Community](https://mircommunity.com/)
+- [TidyTuesday Community Activity](https://github.com/rfordatascience/tidytuesday?tab=readme-ov-file) hosted by [Data Science Learning Community](https://dslc.io/)
+- [Openscapes](https://openscapes.org/)
+- [ROpenSci](https://ropensci.org/)
+
+## Cheatsheets
+
+- [Posit Cheatsheets](https://posit.co/resources/cheatsheets/)
+- [Reproducibility Checklist](https://ropensci-archive.github.io/reproducibility-guide/sections/checklist/)

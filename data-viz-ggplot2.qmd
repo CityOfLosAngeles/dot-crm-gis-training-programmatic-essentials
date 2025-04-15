@@ -1,0 +1,9 @@
+---
+title: "Data Viz Using `ggplot2`"
+---
+
+## What is `ggplot2`?
+
+## Static Plots Example
+
+## Best Practices: Data Viz 
