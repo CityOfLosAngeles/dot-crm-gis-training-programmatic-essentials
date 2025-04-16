@@ -9,11 +9,11 @@ book:
   chapters:
     - index.qmd
     - installation.qmd
-    # - r-projects.qmd
-    # - intro-r-programming.qmd
-    # - cleaning-and-wrangling.qmd
+    - r-projects.qmd
+    - intro-r-programming.qmd
+    - cleaning-and-wrangling.qmd
     # - data-viz-ggplot2.qmd
-    # - resources.qmd
+    - resources.qmd
 
 bibliography: references.bib
 
