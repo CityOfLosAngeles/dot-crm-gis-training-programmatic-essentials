@@ -250,12 +250,12 @@ fares_with_tip
 
 We can **ask questions about an object using logical operators and expressions**. Let’s ask some "questions" about the `taxi_fare` object we made.
 
-- `==` means "is equal to"
-- `!=` means "is" not equal to
-- `<` means "is less than"
-- `>` means "is greater than"
-- `<=` means "is less than or equal to"
-- `>=` means "is greater than or equal to"
+-   `==` means "is equal to"
+-   `!=` means "is" not equal to
+-   `<` means "is less than"
+-   `>` means "is greater than"
+-   `<=` means "is less than or equal to"
+-   `>=` means "is greater than or equal to"
 
 ```{r}
 #| output: false
@@ -267,74 +267,385 @@ taxi_fare != 5
 
 ## Data Types in R
 
-| Data Type | Definition |
-|------------------------------------|------------------------------------|
-| **Logical (Boolean)** | Represents binary values, either `TRUE` or `FALSE`, with `NA` indicating missing data. |
-| **Character** | Text strings such as `"hello"`. **Factors** are a type of character, with added structure like predefined levels or an order. |
-| **Integer** | Whole numbers, created with an `L` suffix (e.g., `2L`). |
-| **Numeric (Double)** | Numbers that include decimals (e.g., `2.5`), often referred to as doubles for their higher precision. |
+Most common data types we'll find in R:
 
-: Common data types in R {.striped .hover tbl-colwidths="\[25,75\]"}
++-----------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Data Type                                           | Definition                                                                                                                                                                                                                                                                                                                        |
++=====================================================+===================================================================================================================================================================================================================================================================================================================================+
+| **Numeric**                                         | In general, these are **numbers** (e.g., 15.7 or -0.98)                                                                                                                                                                                                                                                                           |
+|                                                     |                                                                                                                                                                                                                                                                                                                                   |
+| *Integer, float, and double are subsets of numeric* | Integers are **whole numbers**, created with an L suffix (e.g., `2L`).                                                                                                                                                                                                                                                            |
+|                                                     |                                                                                                                                                                                                                                                                                                                                   |
+|                                                     | **Float** and **Double** are both decimal number types. In R, numbers are usually stored as **64-bit** **doubles**, offering more precision than **32-bit** **floats**. You typically don’t need to worry about the difference, but floats can be useful when optimizing memory or working with tools that require 32-bit values. |
++-----------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **Character**                                       | Non-numeric letters or symbols and numbers stored as characters (think IDs).                                                                                                                                                                                                                                                      |
+|                                                     |                                                                                                                                                                                                                                                                                                                                   |
+|                                                     | Sequences of characters are typically called strings (e.g., "Hello World").                                                                                                                                                                                                                                                       |
++-----------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **Logical (Boolean)**                               | Holds only one of two values: either `TRUE` or `FALSE`. Some times these are coded as 0 or 1.                                                                                                                                                                                                                                     |
+|                                                     |                                                                                                                                                                                                                                                                                                                                   |
+|                                                     | Temporary logicals are an important part of data wrangling (e.g., matching conditions to subset data).                                                                                                                                                                                                                            |
++-----------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **Factor**                                          | Distinct data type for representing **categorical variables**, levels can be:                                                                                                                                                                                                                                                     |
+|                                                     |                                                                                                                                                                                                                                                                                                                                   |
+|                                                     | -   **ordered** (ordinal; e.g. education levels \[middle school, high school, college\] or responses \[agree, neutral, disagree\], and sometimes year \[FY21, FY22, FY23\] depending on your analysis),                                                                                                                           |
+|                                                     |                                                                                                                                                                                                                                                                                                                                   |
+|                                                     | -   **unordered** (nominal; e.g., color \[green, purple, orange\] or gender \[male, female, non-binary\])                                                                                                                                                                                                                         |
++-----------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-| Data Type | Definition |
-|----|----|
-| **Complex** | This data type represents numbers that have both real and imaginary parts, such as `2 + 3i`. These are useful for mathematical computations involving complex numbers, often seen in engineering and physics. |
-| **Raw** | This type stores data as raw bytes, typically used for handling binary data or working with lower-level operations like file manipulation. |
+: {tbl-colwidths="\[30,70\]" .striped}
 
-: Less common data types (we won’t be covering these data types) {.striped .hover tbl-colwidths="\[25,75\]"}
+::: {.callout-note title="Less Common Data Types in R" collapse=true}
 
-**ADD TEXT ABOUT CREATING A STRING AND THEN DOING A CALCULATION WITH IT**
++----------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Data Type                        | Definition                                                                                                                                                                                                    |
++==================================+===============================================================================================================================================================================================================+
+| **Complex**                      | This data type represents numbers that have both real and imaginary parts, such as `2 + 3i`. These are useful for mathematical computations involving complex numbers, often seen in engineering and physics. |
++----------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **Raw**                          | This type stores data as raw bytes, typically used for handling binary data or working with lower-level operations like file manipulation.                                                                    |
++----------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+: (We won’t be covering these data types) {.striped .hover tbl-colwidths="\[25,75\]"}
+
+:::
+
+### Creating & Working with Data Types
+
+::: {.callout-warning icon=false title="Exercise 1: Character Data" collapse=true}
+Create the character vector and then investigate the object using `typeof()` and then `class()`.
+```{r}
+#| eval: false
+micromobility <- c("scooter", "e-bike", "robot delivery devices")
+```
+:::
+
+::: {.callout-warning icon=false title="Exercise 2: Numeric Data" collapse=true}
+Create the numeric vector and then investigate the object using `typeof()` and then `class()`.
+```{r}
+#| eval: false
+weights <- c(20, 35, 44, 50)
+```
+
+Create the integer vector and then investigate the object using `typeof()` and then `class()`.
+```{r}
+#| eval: false
+ages <- c(10L, 15L, 21L, 65L)
+
+# check with a logical test
+is.numeric(ages)
+```
+:::
+
+::: {.callout-warning icon=false title="Exercise 3:  Interacting with Different Data Types" collapse=true}
+Copy the code below and run it in the Console. What happened?
+```{r}
+#| eval: false
+"scooter" * 20
+```
+
+**This exercise highlights an important concept:** In R, objects come in different "classes" or types, and the operations you can perform depend on the object’s type. Just like you wouldn’t use a car to eat soup, you can't perform all operations on character objects. Each object type has a specialized format for its specific purpose.
+:::
 
 ## Data Structures in R {#data-structures}
 
-When we combine multiple values, we create **data structures**. We're going to discuss three data structures in R.
+When we combine multiple data types, we create **data structures**. We're going to discuss three data structures in R: (Atomic) Vectors, Lists, and Data Frames.
 
-1. Atomic vector: a flat sequence of values, all of the same type
+### 1. (Atomic) Vectors
+
+**An atomic vector is a flat sequence of elements, all of the same type.** 
+
+Atomic vectors are the most common type of vector in R, and you'll encounter them frequently. Vectors serve as the building blocks for many other data structures in R, including data frames.
 
 Properties of vectors:
 
-- Type
-- Length
-- Attributes
+-   Type (e.g. character, numeric, logical)
+-   Length (how many elements in the vector?)
+-   Attributes (associated metadata)
 
-**Vectors can only contain a single data type.** If different elements are added, the "most flexible" will be assigned to all elements in the vector. Data types from least to most flexible are: logical, integer, double, and character.
+**Vectors can only contain a single data type.** If different elements are added, the "most flexible" will be assigned to all elements in the vector. 
 
+Data types from least to most flexible are: logical, integer, double, and character.
+
+::: {.callout-warning icon=false collapse=true title="Exercise 1: Combine Classes"}
+
+Create the vector and then investigate the object using `typeof()` and then `class()`.
+
+*Remember there is a hierarchy in R. When combining values into a single vector, R coerces everything to the most flexible (least restrictive) type. If any element is a character, the entire vector will be of type character.*
 ```{r}
-bike <- c(TRUE, 4.5, 8L)
-bike
-class(bike)
+#| eval: false
+ladot_info <- c("100 Main St", 1300, 10L)
+
+# check with a logical test
+is.character(ladot_info)
+is.vector(ladot_info)
+```
+:::
+
+#### Indexing Vectors
+
+**Indexing means accessing elements from a data structure.**
+
+For a vector (or a one-dimensional array), we access an element by position using square brackets `[]`.
+
+Important to note that in an R vector, the first element position = 1. This is different from other languages, like python, that use a zero index where the first element in a vector is position = 0.
+
+::: {.callout-warning icon=false collapse=true title="Exercise 2: Vector Indexing"}
+
+Access the second element in the `micromobility` character vector.
+```{r}
+#| eval: false
+micromobility[2]
 ```
 
-2. List: is similar to a vector, but it can contain different data types.
+:::
 
 
-In R, a vector is the most fundamental and widely used data structure. Essentially, vectors are R's way of storing a collection of values or elements. For example, recall the weight_lb vector, which contained three numeric values. Each of those values belonged to the same data type, specifically "numeric."
+### 2. List
 
-This concept of a vector that only contains elements of the same data type is referred to as an atomic vector. Atomic vectors are the most common type of vector in R, and you'll encounter them frequently.
+**A list is a flat sequence of objects, each of which can be anything — including other lists!**
 
-Vectors serve as the building blocks for many other data structures in R, including data frames. While we won’t dive deep into other data structures in this section, there are plenty of excellent resources available online if you're interested in learning more. A great place to start is the Vectors chapter from Advanced R by Hadley Wickham, which provides an in-depth exploration of this topic.
+To create a list we use the function `list()`:
+```{r}
+#| eval: false
+metro_bike <- list("e-bike", 29, "green", 36L)
 
-3. DATA FRAMES
+# check with a logical test
+is.list(metro_bike)
+is.vector(metro_bike)
+```
 
-- HAVE A CODE CHUNK OF A SMALL DATA FRAME
-- PRACTICE ACCESSING PARTS OF THE DF USING [] AND $
-- ASKING QUESTIONS ABOUT THE DATA FRAME USING CLASS() AND IS.NUMERIC() ETC
+Unlike vectors, which require all elements to be of the same type, **lists** are flexible structures that:
 
-IT'S IMPORTANT TO GET FAMILIAR WITH YOUR DATA FRAME FIRST BEFORE RUNNING ANY ANALYSIS
+- are ideal for **storing complex or heterogeneous** data types,
+- allow each **element to be named** (helpful for organizing and accessing structured data),
+- are often used to **return multiple outputs** from functions or to **store results** such as model outputs.
+
+#### Indexing Lists
+
+Like vectors, list elements can be accessed by their position using square brackets. However, unlike vectors, lists offer two ways to extract elements: 
+
+- using a single pair of square brackets `[]`, which returns a list or object,
+- or a double pair `[[]]`, which returns the elements within the list.
+
+::: {.callout-warning icon=false collapse=true title="Exercise 3: Index a list"}
+
+Create the list `caltrans_hq`, then use square brackets to return the third object and then the elements stored in the third list.
+```{r}
+#| eval: false
+caltrans_hq <- list("Thom Mayne", c(9L, 10L, 11L), c("Caltrans", "LADOT"), 2004)
+# call the list to see how it prints in R
+caltrans_hq
+```
+
+*Important: a single `[]` returns a list. `[[]]` returns the item(s) STORED in the list.*
+
+```{r}
+#| eval: false
+caltrans_hq[3]
+
+caltrans_hq[[3]]
+```
+:::
+
+In a **named list**, you can also access elements by name.
+
+::: {.callout-warning icon=false collapse=true title="Exercise 4: Named Lists"}
+Create the named list and access the first element using `[]` and then the subset operator `$` or "name" of the list.
+```{r}
+#| eval: false
+named_list_caltrans_hq <- list(
+  architect = "Thom Mayne",
+  ladot_floors = c(9L, 10L, 11L),
+  departments = c("Caltrans", "LADOT"),
+  year_opened = 2004
+)
+
+named_list_caltrans_hq
+```
+
+```{r}
+#| eval: false
+
+# index with square brackets
+named_list_caltrans_hq[[1]]
+```
+
+```{r}
+#| eval: false
+
+# index with the name / subset operator (`$`)
+named_list_caltrans_hq$architect
+```
+:::
+
+A more realistic example of how a list can store outputs from a model:
+
+```{r}
+#| eval: false
+# mtcars is a pre-loaded dataset in R #
+
+# fit a linear model
+model <- lm(mpg ~ hp, data = mtcars)
+
+# check the type of object
+class(model) # lm
+is.list(model)
+
+# peek inside the list
+names(model)
+
+# access model coefficients
+model$coefficients
+```
+
+### 3. Data Frames
+
+**A data frame is a list of equal-length vectors, organized into a two-dimensional tabular structure** where:
+
+- Each column is a vector.
+- All vectors (columns) must be the same length.
+- Each vector can be of a different type (numeric, character, logical, etc.).
+
+A data frame is the most common data structure in R and with tidy data makes data analysis easier.
+
+To create a list we use the function `data.frame()`:
+```{r}
+#| eval: false
+ladot_employees_df <- data.frame(
+  name = c("Mia", "Alex", "Joe"),
+  years_employed = c(12, 1, 5),
+  civil_service_appt = c(TRUE, FALSE, TRUE)
+)
+```
+
+#### Indexing Data Frames
+
+Like vectors and lists, elements within a data frame can be accessed using square brackets. However, unlike vectors and lists, data frames are two-dimensional structures, so elements are accessed using a row and column index in the format `[row, column]`.
+
+::: {.callout-warning icon=false collapse=true title="Exercise 5: Index a df"}
+Using the `ladot_employees_df` data frame we created above, pull out the number of years that Mia has been employed.
+```{r}
+#| eval: false
+ladot_employees_df[1, 2]
+```
+:::
+
+
+::: {.callout-warning icon=false collapse=true title="Exercise 6: Index a row in a df"}
+Using the `ladot_employees_df` data frame we created above, access the row for the employee Alex.
+
+In a data frame, you can use square brackets `[]` to access specific rows and columns with the format `df[row, column]`. If you leave either the **row or column index blank, but keep the comma, it tells R to return all rows or all columns, respectively.**
+
+```{r}
+#| eval: false
+ladot_employees_df[2,]
+```
+:::
+
+
+::: {.callout-warning icon=false collapse=true title="Exercise 7: Accessing a column vs elements"}
+
+From indexing lists, we learned that `[]` returns a list, while `[[]]` pulls out the actual elements inside the list. Since a data frame is a special type of list, the same rules apply.
+
+Let’s explore this using the `years_employed` column (the second column in `ladot_employees_df`):
+```{r}
+#| eval: false
+ladot_employees_df[2]
+# check with a logical test
+is.data.frame(ladot_employees_df[2])
+
+# vs
+
+ladot_employees_df[[2]]
+# check with a logical test
+is.data.frame(ladot_employees_df[[2]])
+is.vector(ladot_employees_df[[2]])
+```
+:::
+
+::: {.callout-warning icon=false collapse=true title="Exercise 8: Updating an element"}
+With indexing, we can also update elements in a data frame by assigning new values using square brackets `[]`.
+
+Let’s say Alex’s civil service appointment was entered incorrectly — it should be `TRUE` instead of `FALSE.` We can fix that by targeting the specific cell and assigning a new value:
+```{r}
+#| eval: false
+# update civil service appt
+ladot_employees_df[2, 3] <- TRUE
+```
+:::
+
+::: {.callout-warning icon=false collapse=true title="Bonus! Reproducibility Check"}
+Let’s say we need to save Joe’s years employed for a future calculation. Consider the two code snippets below:
+```{r}
+#| eval: false
+# option 1: hard code value
+joe_yrs_employed <- 5
+
+# vs
+
+# option 2: index from df
+joe_yrs_employed <- ladot_employees_df$years_employed[3]
+```
+
+**Which one is more reproducible?** 
+
+- Option 2 is the more reproducible choice because it pulls the value directly from your data. If the data changes — for example, if Joe's years employed is updated, or the number of years is recalculated — Option 2 will always reflect the current value.
+- Option 1 is risky because it hard-codes a number that may go out of date. It also relies on you remembering where the value came from, which can make your code harder to maintain or audit later.
+
+- Where Option 2 could break: 
+    - If row order changes (e.g., sorting the data), then `ladot_employees_df$years_employed[3]` might no longer point to Joe’s row.
+    - If you add or remove rows, the position could shift.
+:::
 
 ## Functions in R
 
-- what it is
-- syntax
-- practice
-- how do I get more functions and tools? answer: packages
+::: {.callout-tip title="What's a function?"}
+A function is a self-contained piece of code that takes input(s), performs a specific task, and returns an output
+:::
 
-- error messages are your friend
+R has a large collection of built-in functions, and all functions are **called** using the same basic syntax:
 
-## Best Practices
+```{r}
+#| eval: false
+
+function_name(argument_1 = value_1, argument_2 = value_2, ...)
+```
+
+You call a function by writing its name, followed by parentheses that include any information the function needs — these are called arguments. Arguments are the inputs that tell the function how to do its job. Some functions only need one argument, while others can take several. Knowing what arguments a function expects (and in what order or format) is key to using it effectively and getting the result you want.
+
+### Help Pages
+
+How do we learn more about a function and the arguments it takes? We look at the help documentation! This is especially useful when you're working with a function you haven’t used before or want to understand all the available arguments.
+
+Let's open the help page for `mean()`, type this in your Console:
+```{r}
+#| eval: false
+
+?mean
+```
+
+This will open the Help pane in the lower-right corner of RStudio, showing detailed information about the function. Here's how the help page is usually organized:
+
+- **Description**: A short overview of what the function does.
+- **Usage**: The function’s syntax, including its arguments and default values.
+- **Arguments**: A breakdown of what each argument means and expects.
+- **Details**: Additional context or edge cases to be aware of.
+- **Value**: What the function returns after it runs.
+- **See Also**: Links to related functions you might want to explore.
+- **Examples**: Ready-to-run code samples that show the function in action.
+
+**Need more help?** Many packages include vignettes - detailed guides on how to use their functions. Google `package_name` vignette (e.g., dplyr vignette) or check the package’s CRAN page for links.
+
+::: {.callout-tip title="Bonus: Help with Debugging"}
+
+When the debugging blues start to hit...reach out for help! I highly recommend the workshop [Teach Me How to Google](https://ucsb-meds.github.io/teach-me-how-to-google/#1) by Sam Csik. It’s packed with practical tips to level up your troubleshooting game.
+
+Remember: feeling frustrated and even walking away from your code is totally normal. It’s all part of the process.
 
 ```{r}
 #| echo: false
-knitr::include_graphics("images/future-you-collab-hadley-wickham-quote.png")
+
+knitr::include_graphics("images/debugging_feelings_ah.png")
 ```
 
+:::
