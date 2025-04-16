@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="LADOT Commerical Rideshare &amp; Mobility">
-<meta name="dcterms.date" content="2025-04-15">
 
-<title>Programmatic Data Processing Essentials for GIS Specialists</title>
+<title>Programmatic Data Processing Essentials for GIS Specialists - 2&nbsp; R Projects</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -32,7 +64,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./installation.html" rel="next">
+<link href="./intro-r-programming.html" rel="next">
+<link href="./installation.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +115,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Overview</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./r-projects.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">R Projects</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -109,7 +142,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview</span></a>
   </div>
 </li>
@@ -121,7 +154,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./r-projects.html" class="sidebar-item-text sidebar-link">
+  <a href="./r-projects.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">R Projects</span></span></a>
   </div>
 </li>
@@ -153,12 +186,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a>
-  <ul class="collapse">
-  <li><a href="#goal" id="toc-goal" class="nav-link" data-scroll-target="#goal">🌟 Goal</a></li>
-  <li><a href="#how" id="toc-how" class="nav-link" data-scroll-target="#how">👩🏽‍💻 How</a></li>
-  <li><a href="#motivation" id="toc-motivation" class="nav-link" data-scroll-target="#motivation">💡 Motivation</a></li>
-  </ul></li>
+  <li><a href="#how-code-finds-stuff-from-data-to-files-to-images" id="toc-how-code-finds-stuff-from-data-to-files-to-images" class="nav-link active" data-scroll-target="#how-code-finds-stuff-from-data-to-files-to-images">How Code Finds Stuff (From Data to Files to Images)</a></li>
+  <li><a href="#robust-file-paths-using-r-projects-the-here-package" id="toc-robust-file-paths-using-r-projects-the-here-package" class="nav-link" data-scroll-target="#robust-file-paths-using-r-projects-the-here-package">Robust File Paths Using R Projects &amp; the <code>here</code> package</a></li>
+  <li><a href="#lets-create-an-r-project" id="toc-lets-create-an-r-project" class="nav-link" data-scroll-target="#lets-create-an-r-project">Let’s Create an R Project</a></li>
+  <li><a href="#r-project-organization" id="toc-r-project-organization" class="nav-link" data-scroll-target="#r-project-organization">R Project Organization</a></li>
   </ul>
 </nav>
     </div>
@@ -167,26 +198,14 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Programmatic Data Processing Essentials for GIS Specialists</h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">R Projects</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>LADOT Commerical Rideshare &amp; Mobility </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">April 15, 2025</p>
-    </div>
-  </div>
   
     
   </div>
@@ -196,29 +215,261 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="overview" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="overview">Overview</h2>
-<section id="goal" class="level3">
-<h3 class="anchored" data-anchor-id="goal">🌟 Goal</h3>
-<p>Equip GIS Specialists with foundational R programming skills to streamline their data cleaning and preparation, enabling more efficient workflows with ArcGIS Pro for spatial analysis and map creation.</p>
-</section>
-<section id="how" class="level3">
-<h3 class="anchored" data-anchor-id="how">👩🏽‍💻 How</h3>
-<p>Participants will learn:</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Acknowledgements">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Acknowledgements
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Lesson is based on the National Center for Ecological Analysis &amp; Synthesis (NCEAS) Learning Hub’s <a href="https://learning.nceas.ucsb.edu/2023-10-coreR/" target="_blank">coreR Course</a> and Allison Horst’s EDS 221 Scienfitic Programming la la la</p>
+</div>
+</div>
+</div>
+<section id="how-code-finds-stuff-from-data-to-files-to-images" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="how-code-finds-stuff-from-data-to-files-to-images">How Code Finds Stuff (From Data to Files to Images)</h2>
+<p>There are two types of paths in computing: <strong>absolute paths</strong> and <strong>relative paths</strong>.</p>
+<p>An <strong>absolute path</strong> is the <strong>full path</strong> to a file or directory, starting from the root directory of the file system. It tells the system exactly where a file or folder is located, no matter where you are in the file structure.</p>
 <ul>
-<li>How to structure R Projects for reproducibility</li>
-<li>Write R code in RStudio</li>
-<li>Apply core <code>tidyverse</code> functions to clean and wrangle messy data</li>
-<li>Explore data visualization using <code>ggplot2</code></li>
+<li>On Windows, the absolute path starts with a drive letter: <code>C:\Users\Halina\Documents\training\data\raw_data.csv</code></li>
+<li>On Unix/Linux/macOS, the absolute path starts with a root: <code>/home/halina/projects/training/data/raw_data.csv</code></li>
 </ul>
-<p>Emphasis will be placed on reshaping data into <strong>tidy data</strong> - a consistent, tabular structure that makes analysis and visualization easier, especially when working with spatial attributes in ArcGIS Pro.</p>
+<p>A <strong>relative path</strong> specifies a file or directory location in relation to the <strong>current working directory</strong> (where you are in the file system when running the command or script).</p>
+<ul>
+<li>It doesn’t start with the root or a drive letter</li>
+<li>It’s flexible depending on where your program or terminal session is running</li>
+<li>If you’re currently in <code>C:\Users\Halina\Documents\training</code>, the relative path to the raw data file might be: <code>\data\raw_data.csv</code></li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled" title="Absolute File Paths can break!">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Absolute File Paths can break!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr) <span class="co"># load data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>raw_data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"/home/halina/projects/training/data/raw_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>How would this code break?</p>
+<ul>
+<li><strong>If I was on a different computer or switched user accounts on the same computer.</strong> <code>/home/halina/...</code> is an absolute path specific to MY user account on MY computer. Another computer likely won’t have that same directory structure or username. Other users will have their own home directories, like <code>/home/otheruser/</code>, and won’t be able to access files in my home folder.</li>
+<li><strong>If I moved <code>raw_data.csv</code> to a different location on the same computer.</strong> Since the path is hardcoded, the code can’t find the file anymore unless I update the path to reflect the new location.</li>
+<li><strong>If I shared this with a collaborator.</strong> My collaborators would not be able to run it because they don’t have <code>/home/halina/</code> on their computers.</li>
+<li><strong>If I shared this with someone on a Windows computer.</strong> It may break because absolute file paths are formatted differently across operating systems. My Mac uses <code>/Users/...</code> or <code>/home/...</code>, while Windows uses <code>C:/Users/...</code>, so the hardcoded path wouldn’t exist on their system.</li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled" title="Exercise 1">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 1
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Let’s practice making some file paths!</strong></p>
+<p>Consider the R Project below and answer the following questions:</p>
+<ul>
+<li>If our starting point is <code>scripts</code>, what is the file path to <code>raw_spatial.shp</code>?</li>
+<li>If our starting point is <code>docs</code>, what is the file path to <code>clean_data.csv</code>?</li>
+<li>If our starting point is <code>training</code>, what is the file path to <code>raw_data.csv</code>?</li>
+</ul>
+<p><em>Note: To move up one level in the folder hierarchy, use <code>..</code> in the file path.</em></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/exercise_file_paths.png" class="img-fluid figure-img" width="1030"></p>
+</figure>
+</div>
+</div>
+</div>
+<details>
+<summary>
+Answer:
+</summary>
+<ul>
+<li><code>scripts\..\training\data\raw\spatial.shp</code></li>
+<li><code>docs\..\training\data\processed\clean_data.csv</code></li>
+<li><code>training\data\raw\raw_data.csv</code></li>
+</ul>
+</details>
+</div>
+</div>
+</div>
 </section>
-<section id="motivation" class="level3">
-<h3 class="anchored" data-anchor-id="motivation">💡 Motivation</h3>
-<p>Many GIS professionals rely on Excel or manual, one-off methods for preparing spatial data. These processes can be time-consuming, error-prone, and hard to replicate. R programming is a powerful, scriptable, and repeatable way to handle data preparation, saving time and reducing frustration while promoting reproducible workflows that align with data science best practices.</p>
+<section id="robust-file-paths-using-r-projects-the-here-package" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="robust-file-paths-using-r-projects-the-here-package">Robust File Paths Using R Projects &amp; the <code>here</code> package</h2>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>An <strong>R project</strong> is a directory (folder) on our local computer, which allows us to work in a self-contained space, streamlines the organization of our work and facilitates collaboration with others.</p>
+</div>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:65%;">
+<p>When you create an R Project, it sets up a dedicated folder (directory) for your work and creates a hidden file with a <code>.Rproj</code> extension. When you open the project in RStudio, R automatically sets the working directory to this folder (your project’s <strong>“home base”</strong>) making it easy to organize and reference all your code, data, and outputs.</p>
+</div><div class="column" style="width:5%;">
+
+</div><div class="column" style="width:30%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/rproj.png" class="img-fluid figure-img" width="128"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://here.r-lib.org/" target="_blank"><img src="images/here_package_ah.png" class="img-fluid figure-img" alt="Artwork by Allison Horst"></a></p>
+<figcaption>Artwork by Allison Horst</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:55%;">
+<p>While R Projects and the <code>.Rproj</code> file enable the use of relative paths, they don’t address <em>all</em> potential issues with breakable file paths. One challenge when working across different operating systems (Windows, macOS, or Linux) is that file paths can be formatted differently. Windows uses backslashes (<code>\</code>), while Unix-like systems (macOS/Linux) use forward slashes (<code>/</code>). Also, absolute file paths are tied to <em>your</em> machine’s file structure, so code that works on your computer might break on someone else’s.</p>
+</div>
+</div>
+<p>The <a href="https://here.r-lib.org/"><code>here</code></a> package helps solve this by <strong>constructing file paths relative to your project directory—regardless of your operating system</strong>. This makes your code more portable and reproducible.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr) <span class="co"># load data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># avoid absolute paths that only work on your computer</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>raw_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"C:\Users\Halina\Documents</span><span class="sc">\t</span><span class="st">raining\data</span><span class="sc">\r</span><span class="st">aw_data.csv"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># avoid fragile relative paths like this</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>raw_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data</span><span class="sc">\r</span><span class="st">aw_data.csv"</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># use here::here() for robust, OS-agnostic paths</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>raw_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"raw_data.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled" title="Exercise 2">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 2
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Let’s practice creating file paths using <code>here::here()</code>!</strong></p>
+<p>Consider the R Project below, answer the following questions:</p>
+<ul>
+<li>If our starting point is <code>scripts</code>, what is the file path to <code>raw_spatial.shp</code>?</li>
+<li>If our starting point is <code>docs</code>, what is the file path to <code>clean_data.csv</code>?</li>
+<li>If our starting point is <code>training</code>, what is the file path to <code>raw_data.csv</code>?</li>
+</ul>
+<p><em>Note: <code>here::here()</code> builds file paths relative to the root of your R Project. In this case, the root is <code>training\</code>.</em></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/exercise_file_paths.png" class="img-fluid figure-img" width="1030"></p>
+</figure>
+</div>
+</div>
+</div>
+<details>
+<summary>
+Answer:
+</summary>
+<p>The relative paths:</p>
+<ul>
+<li><code>data\raw\spatial.shp</code></li>
+<li><code>data\processed\clean_data.csv</code></li>
+<li><code>data\raw\raw_data.csv</code></li>
+</ul>
+<p>Using <code>here()</code>:</p>
+<ul>
+<li><code>here("data", "raw", "spatial.shp")</code></li>
+<li><code>here("data", "processed", "clean_data.csv")</code></li>
+<li><code>here("data", "raw", "raw_data.csv")</code></li>
+</ul>
+</details>
+</div>
+</div>
+</div>
+</section>
+<section id="lets-create-an-r-project" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="lets-create-an-r-project">Let’s Create an R Project</h2>
+<div class="callout callout-style-default callout-warning no-icon callout-titled" title="Steps to Create an R Project">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Steps to Create an R Project
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>In the “File” menu, select “New Project”</li>
+<li>Click “New Directory”</li>
+<li>Click “New Project”</li>
+<li>Under “Directory name” type: <code>r_training_{LAST_NAME}</code> (i.e.&nbsp;<code>r_training_do-linh</code>)</li>
+<li>Leave “Create Project as subdirectory of:” set to <code>~</code> (the tilde means “home”)</li>
+<li>Click “Create Project”</li>
+</ol>
+<p>RStudio should open your new project automatically after creating it. One way to check this is by looking at the top right corner and checking for the project name.</p>
+</div>
+</div>
+</section>
+<section id="r-project-organization" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="r-project-organization">R Project Organization</h2>
+<p>A consistent folder structure makes it easier to reproduce work and collaborate with others. While directory organization can vary depending on the project, some common directories include:</p>
+<div class="columns">
+<div class="column" style="width:55%;">
+<ul>
+<li><code>data</code>: Stores datasets. This folder often contains subdirectories such as:
+<ul>
+<li><code>raw</code>: unaltered, original data files</li>
+<li><code>processed</code>: cleaned or transformed datasets</li>
+<li><code>metadata</code>: information describing the data (e.g., data dictionaries)</li>
+</ul></li>
+<li><code>R</code> or <code>scripts</code>: Contains code for data cleaning, wrangling, or analysis. Some projects prefer <code>scripts</code> if they use multiple programming languages beyond R.</li>
+<li><code>plots</code> or <code>figs</code>: Stores generated visualizations like plots, graphs, or figures.</li>
+<li><code>docs</code>: Includes reports, project summaries, or other documentation relevant to the analysis.</li>
+</ul>
+</div><div class="column" style="width:45%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/rproj-basic-organization.png" class="img-fluid figure-img" width="540"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><p>The key is to be consistent and intentional in your organization so others (and future-you) can easily understand and reuse your work.</p>
+</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -611,10 +862,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./installation.html" class="pagination-link  aria-label=" &lt;span="" &amp;="" rstudio="" installation="" guide&lt;="" span&gt;"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R &amp; RStudio Installation Guide</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./installation.html" class="pagination-link" aria-label="<span class='chapter-number'>1</span>&nbsp; <span class='chapter-title'>R &amp; RStudio Installation Guide</span>">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R &amp; RStudio Installation Guide</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./intro-r-programming.html" class="pagination-link" aria-label="<span class='chapter-number'>3</span>&nbsp; <span class='chapter-title'>Intro to R Programming</span>">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intro to R Programming</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

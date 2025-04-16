@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.549">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Programmatic Data Processing Essentials for GIS Specialists - Cleaning &amp; Wrangling</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./resources.html" rel="next">
+<link href="./intro-r-programming.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cleaning-and-wrangling.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Cleaning &amp; Wrangling</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Programmatic Data Processing Essentials for GIS Specialists</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R &amp; RStudio Installation Guide</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r-projects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">R Projects</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro-r-programming.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intro to R Programming</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cleaning-and-wrangling.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Cleaning &amp; Wrangling</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Resources</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#what-is-tidy-data" id="toc-what-is-tidy-data" class="nav-link active" data-scroll-target="#what-is-tidy-data">What is Tidy Data?</a>
+  <ul class="collapse">
+  <li><a href="#practice" id="toc-practice" class="nav-link" data-scroll-target="#practice">Practice</a></li>
+  </ul></li>
+  <li><a href="#cleaning-wrangling-example" id="toc-cleaning-wrangling-example" class="nav-link" data-scroll-target="#cleaning-wrangling-example">Cleaning &amp; Wrangling Example</a>
+  <ul class="collapse">
+  <li><a href="#reshape-data-from-wide-to-long" id="toc-reshape-data-from-wide-to-long" class="nav-link" data-scroll-target="#reshape-data-from-wide-to-long">Reshape data from wide to long</a></li>
+  <li><a href="#reshape-data-from-long-to-wide" id="toc-reshape-data-from-long-to-wide" class="nav-link" data-scroll-target="#reshape-data-from-long-to-wide">Reshape data from long to wide</a></li>
+  <li><a href="#wrangling-strings-and-adding-columns" id="toc-wrangling-strings-and-adding-columns" class="nav-link" data-scroll-target="#wrangling-strings-and-adding-columns">Wrangling strings and adding columns</a></li>
+  </ul></li>
+  <li><a href="#bonus-visualize-the-tidy-data-frame" id="toc-bonus-visualize-the-tidy-data-frame" class="nav-link" data-scroll-target="#bonus-visualize-the-tidy-data-frame">Bonus: Visualize the Tidy Data Frame</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Cleaning &amp; Wrangling</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/whole-game.png" class="img-fluid figure-img" width="752"></p>
+<figcaption>Image Credit: R for Data Science (2e), by Hadley Wickham, et al.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="what-is-tidy-data" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-tidy-data">What is Tidy Data?</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="&quot;Acknowledgements">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+“Acknowledgements
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Illustrations in Section 4.1 come from the <a href="https://www.openscapes.org/">Openscapes</a> blog <a href="https://www.openscapes.org/blog/2020/10/12/tidy-data/"><em>Tidy Data for reproducibility, efficiency, and collaboration</em></a> by Julia Lowndes and Allison Horst.</p>
+</div>
+</div>
+<p><strong>Tidy Data</strong> is a standardized approach to structuring data tables that makes data management, analysis, and collaboration more efficient, scalable, and reproducible. When we apply <strong>Tidy Principles</strong>, we can transform messy or inconsistent data into a clean, consistent format that supports faster, more transparent, and more accurate analysis.</p>
+<p>Tidy data follows “a standard way to organize data values within a dataset.” The core principles are:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/tidy_data_1.jpg" class="img-fluid figure-img" alt="Stylized text providing an overview of Tidy Data. The top reads “Tidy data is a standard way of mapping the meaning of a dataset to its structure. - Hadley Wickham.” On the left reads “In tidy data: each variable forms a column; each observation forms a row; each cell is a single measurement.” There is an example table on the lower right with columns ‘id’, ‘name’ and ‘color’ with observations for different cats, illustrating tidy data structure."></p>
+</figure>
+</div>
+</div>
+</div>
+<p>It’s important to note that tidy principles are not tied to R or any specific programming language or software. Rather, they represent a <strong>universal approach to organizing data</strong> that enhances our ability to work with it effectively—regardless of the tools we use.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/tidy_data_3.jpg" class="img-fluid figure-img" alt="On the left is a happy cute fuzzy monster holding a rectangular data frame with a tool that fits the data frame shape. On the workbench behind the monster are other data frames of similar rectangular shape, and neatly arranged tools that also look like they would fit those data frames. The workbench looks uncluttered and tidy. The text above the tidy workbench reads “When working with tidy data, we can use the same tools in similar ways for different datasets…” On the right is a cute monster looking very frustrated, using duct tape and other tools to haphazardly tie data tables together, each in a different way. The monster is in front of a messy, cluttered workbench. The text above the frustrated monster reads “...but working with untidy data often means reinventing the wheel with one-time approaches that are hard to iterate or reuse.”"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>When you encounter a data table for the first time, ask yourself the following questions to <strong>determine whether it meets the criteria for tidy data</strong>:</p>
+<ol type="1">
+<li><strong>As I move down each column, do all the values represent the same variable?</strong>
+<ol type="a">
+<li><em>Think: An attribute that is being measured, counted, or described with data such as year, scooter company, duration or population.</em></li>
+</ol></li>
+<li><strong>As I move across each row, do all the values belong to a single observation?</strong>
+<ol type="a">
+<li><em>Think: A single “data point” for which the measure, count or description of one or more variables is recorded. For example, if you are recording variables height, mass, and color of dragons, then each dragon is an observation.</em></li>
+</ol></li>
+<li><strong>Does each cell contain only one value?</strong>
+<ol type="a">
+<li><em>Think: A single value of the recorded measure, count or description of the variable. We can’t have multiple values nor marginal sums in a cell.</em></li>
+</ol></li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/tidy_data_5.png" class="img-fluid figure-img" alt="Following three rules makes a dataset tidy: variables are in columns, observations are in rows, and values are in cells." width="960"></p>
+<figcaption>Tidy data schematic, from R for Data Science by Grolemund &amp; Wickham.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="practice" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="practice">Practice</h3>
+<div class="callout callout-style-default callout-warning no-icon callout-titled" title="Exercise 1">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Why isn’t this data “tidy”? What would it look like if it was tidy? What might you call the variables?</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>city</th>
+<th>device_type</th>
+<th>2005</th>
+<th>2006</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Los Angeles</td>
+<td>scooter</td>
+<td>300</td>
+<td>847</td>
+</tr>
+<tr class="even">
+<td>Los Angeles</td>
+<td>e-bike</td>
+<td>459</td>
+<td>345</td>
+</tr>
+<tr class="odd">
+<td>Culver City</td>
+<td>scooter</td>
+<td>890</td>
+<td>867</td>
+</tr>
+<tr class="even">
+<td>Culver City</td>
+<td>e-bike</td>
+<td>243</td>
+<td>345</td>
+</tr>
+</tbody>
+</table>
+<details>
+<summary>
+<b>Answer 1</b>
+</summary>
+<p>To make this data tidy, we converted the table <strong>from wide to long format</strong>.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>city</th>
+<th>device_type</th>
+<th>year</th>
+<th>trip_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Los Angeles</td>
+<td>scooter</td>
+<td>2005</td>
+<td>300</td>
+</tr>
+<tr class="even">
+<td>Los Angeles</td>
+<td>e-bike</td>
+<td>2005</td>
+<td>459</td>
+</tr>
+<tr class="odd">
+<td>Culver City</td>
+<td>scooter</td>
+<td>2005</td>
+<td>890</td>
+</tr>
+<tr class="even">
+<td>Culver City</td>
+<td>e-bike</td>
+<td>2005</td>
+<td>243</td>
+</tr>
+<tr class="odd">
+<td>Los Angeles</td>
+<td>scooter</td>
+<td>2006</td>
+<td>847</td>
+</tr>
+<tr class="even">
+<td>Los Angeles</td>
+<td>e-bike</td>
+<td>2006</td>
+<td>345</td>
+</tr>
+<tr class="odd">
+<td>Culver City</td>
+<td>scooter</td>
+<td>2006</td>
+<td>867</td>
+</tr>
+<tr class="even">
+<td>Culver City</td>
+<td>e-bike</td>
+<td>2006</td>
+<td>345</td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled" title="Exercise 2">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Why isn’t this data “tidy”? What would it look like if it was tidy? What might you call the variables?</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>neighborhood</th>
+<th>variable</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>West Adams</td>
+<td>population</td>
+<td>153,457</td>
+</tr>
+<tr class="even">
+<td>Pico Union</td>
+<td>population</td>
+<td>40,000</td>
+</tr>
+<tr class="odd">
+<td>West Adams</td>
+<td>area</td>
+<td>14.5</td>
+</tr>
+<tr class="even">
+<td>Pico Union</td>
+<td>area</td>
+<td>1.33</td>
+</tr>
+</tbody>
+</table>
+<details>
+<summary>
+<b>Answer 2</b>
+</summary>
+<p>To make this data tidy, we converted the table <strong>from long to wide format</strong>.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>neighborhood</th>
+<th>population</th>
+<th>area_sq_mi</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>West Adams</td>
+<td>153,457</td>
+<td>14.5</td>
+</tr>
+<tr class="even">
+<td>Pico Union</td>
+<td>40,000</td>
+<td>1.33</td>
+</tr>
+</tbody>
+</table>
+</details>
+</div>
+</div>
+</section>
+</section>
+<section id="cleaning-wrangling-example" class="level2">
+<h2 class="anchored" data-anchor-id="cleaning-wrangling-example">Cleaning &amp; Wrangling Example</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Quick note on Base `R` vs `tidyverse`">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Quick note on Base <code>R</code> vs <code>tidyverse</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As you dive deeper into your R programming journey, you will see programmers utilizing Base <code>R</code> or the <code>tidyverse</code> as the framework for their code - or a mix of both!</p>
+<ul>
+<li>The <code>tidyverse</code> refers to a collection of R packages designed for data science, offering a consistent and intuitive way to manipulate, explore, and visualize data, with packages like <code>dplyr</code>, <code>ggplot2</code>, and <code>tidyr</code>.</li>
+<li>Base R refers to the built-in functions that come with the R programming language.</li>
+</ul>
+</div>
+</div>
+<p>In this section, we will take messy data from the real world and programmatically wrangle it into a tidy data table using a handful of <code>tidyverse</code> packages.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Data we're working with">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Data we’re working with
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Goal:</strong> Turn this messy data into <strong>tidy data</strong>!</p>
+<p>This data comes from the <a href="https://www.fhwa.dot.gov/ohim/onh00/bar4.htm">U.S. Department of Transportation, Federal Highway Administration</a>. The table compares automobile usage statistics across several countries for the year 1997 (some entries from 1990 and 1991).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://www.fhwa.dot.gov/ohim/onh00/bar4.htm" target="_blank"><img src="images/messy_data_auto_vmt.png" class="img-fluid figure-img" alt="Preview of data from U.S. DOT FHA"></a></p>
+<figcaption>Preview of data from U.S. DOT FHA</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>R Packages we’ll be using for accessing, tidying, and visualizing the data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install packages using `install.packages("name_of_package")`</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(googlesheets4) <span class="co"># load data</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr) <span class="co"># explore data</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># wrangle data</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr) <span class="co"># wrangle data</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor) <span class="co"># `clean_names()`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The data from U.S. DOT FHA has been recreated in a Google Sheet and can be accessed using the <code>googlesheets4</code> package. <strong>Note:</strong> You will have to authenticate your Gmail account before using <code>googlesheets4</code>, you will see a prompt for authentication in the Console when you run the code below.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># "dat" = shorthand for "data"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>link_raw_dat <span class="ot">=</span> <span class="st">"https://docs.google.com/spreadsheets/d/1QxmPVLol1Vmxq5f3PFPVr5SyDRFfcwkg6wc-gu0ISVc/edit?usp=sharing"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>raw_dat <span class="ot">&lt;-</span> googlesheets4<span class="sc">::</span><span class="fu">read_sheet</span>(link_raw_dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Before working with data, it’s always important to explore it first! Use the functions below to get familiar with the data. What information did you gain?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run in the Console #</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># prints out the first 5 rows of the data frame</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(raw_dat)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># provides a broad overview of a data frame</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>skimr<span class="sc">::</span><span class="fu">skim</span>(raw_dat)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># opens data in a spreadsheet-style data viewer; </span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># the larger the data, the longer it will take to load</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(raw_dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>names()</code> is a useful function that returns the column names of the data frame.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(raw_dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "...1"      "Japan"     "France"    "Germany"   "Sweden"    "U.K."     
+[7] "Canada 1/" "Mexico 2/" "U.S."     </code></pre>
+</div>
+</div>
+<p>The names of the columns are inconsistent and will be hard to work with in our data wrangling. Let’s fix that using the <code>clean_names()</code> function from the R package, <code>janitor</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cn = shorthand for "clean names"</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>cn_dat <span class="ot">&lt;-</span> raw_dat <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Pipe ( %>% ) Operator">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Pipe ( %&gt;% ) Operator
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We just used the Pipe ( %&gt;% ) Operator for the first time! The pipe is an operator that <strong>takes the output of one function and passes it into another function as an argument</strong>. It links together all the steps in data analysis making the code more efficient and readable.</p>
+<p>Pipe Operator shortcut:</p>
+<ul>
+<li>Windows: <code>Ctrl</code> + <code>Shift</code> + M</li>
+<li>Mac: <code>Command</code> + <code>Shift</code> + M</li>
+</ul>
+</div>
+</div>
+<p>From <code>View()</code>, we can tell that our table isn’t tidy: each column should be a variable, and each row should be one observation, but that’s not the case here. In the first column (initially unnamed, but <code>janitor::clean_names()</code> provided it with the name <code>x1</code>), we see there are multiple variables. And each row contains data about multiple countries.</p>
+<section id="reshape-data-from-wide-to-long" class="level3">
+<h3 class="anchored" data-anchor-id="reshape-data-from-wide-to-long">Reshape data from wide to long</h3>
+<p>We’ll need to reshape the data from wide to long <em>and</em> from long to wide to get it into the right structure.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Sketch it out">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Sketch it out
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It can be helpful to draw out what the table should look like after each function and at the end of data wrangling.</p>
+<p>We’re first going to reshape the data from wider to longer using <code>tidyr::pivot_longer()</code>. What do you expect the table to look like? What new variable names will we have?</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># what happens when we run this code?</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>long_dat <span class="ot">&lt;-</span> cn_dat <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span>x1,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"country"</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"value"</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="We got an Error!">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+We got an Error!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre><code>Error in `tidyr::pivot_longer()`:
+! Can't combine `japan` &lt;double&gt; and `canada_1` &lt;list&gt;.
+Backtrace:
+ 1. cn_dat %&gt;% ...
+ 3. tidyr:::pivot_longer.data.frame(., cols = -x1, names_to = "country", values_to = "value")</code></pre>
+<p>It can be scary to when errors come up - but <em>always</em> read the error message! Google will be a helpful friend for deciphering, but over time you’ll gain instincts for understanding what the function needs to run properly.</p>
+</div>
+</div>
+<p>This error is telling us that it’s trying to combine columns with incompatible data types, and it’s not allowed. When we use <code>pivot_longer()</code>, it tries to combine multiple columns into a single column under the hood, but it can’t merge a column of type <strong>double</strong> with a column of type <strong>list.</strong></p>
+<p>Check the data type of each column using <code>class()</code> and the subset operator (<code>$</code>) to confirm that the columns <code>japan</code> and <code>canada_1</code> are different from each other.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(cn_dat<span class="sc">$</span>japan)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(cn_dat<span class="sc">$</span>canada_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can change a vector or column into a numeric data type using <code>as.numeric()</code>. What data type does <code>canada_1</code> have now?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>wrangle_dat <span class="ot">&lt;-</span> cn_dat <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">canada_1 =</span> <span class="fu">as.numeric</span>(canada_1))</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(wrangle_dat<span class="sc">$</span>canada_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="We got a Warning!">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+We got a Warning!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre><code>Warning: There was 1 warning in `dplyr::mutate()`.
+ℹ In argument: `canada_1 = as.numeric(canada_1)`.
+Caused by warning:
+! NAs introduced by coercion</code></pre>
+<p>Warnings can be scary to see too, but they’re different from errors! <strong>A warning means the code successfully ran, but R is giving you a heads-up.</strong> That heads-up is saying: “Something might not have gone exactly as expected, and there may be unexpected or risky behavior in your result.”</p>
+</div>
+</div>
+<p>In this case, the warning is telling us that R tried to convert some values to a different type, but some of those values couldn’t be converted, so R replaced them with <code>NA</code> (missing values).</p>
+<p>Let’s look more closely at the structure of the column <code>canada_1</code> to understand what’s going on.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `str()` returns the structure of the object</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># esp useful since `canada_1` is a list - shows what’s inside each element</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(cn_dat<span class="sc">$</span>canada_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 5
+ $ : num 4.86
+ $ : num 0.444
+ $ : num 13887270
+ $ : num 31281092
+ $ : chr "N/A"</code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Additional functions to use to inspect data</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># best to run these in the Console; not your R Script</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.na</span>(cn_dat<span class="sc">$</span>canada_1)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>skimr<span class="sc">::</span><span class="fu">skim</span>(cn_dat<span class="sc">$</span>canada_1)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cn_dat<span class="sc">$</span>canada_1)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cn_dat<span class="sc">$</span>canada_1)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(cn_dat<span class="sc">$</span>canada_1)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(cn_dat<span class="sc">$</span>canada_1)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(cn_dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>From <code>str()</code>, we can see that the last element in the list is of type <code>chr</code>, or character. Let’s see what happens when we run <code>as.numeric()</code> on just that value:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(<span class="st">"N/A"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We receive the same warning, <code>NAs introduced by coercion</code>. That confirms this character value is likely the cause of the issue.</p>
+<p>We can replace the character value with a true <code>NA</code> value using <code>na_if()</code> from the <code>dplyr</code> package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>wrangle_dat <span class="ot">&lt;-</span> cn_dat <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">canada_1 =</span> dplyr<span class="sc">::</span><span class="fu">na_if</span>(<span class="at">x =</span> canada_1, <span class="at">y =</span> <span class="st">"N/A"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Looks like we’ve received another error…this is all part of the data tidying or wrangling process! What is this error trying to tell us?</p>
+<div class="callout callout-style-simple callout-important no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<pre><code>Error in `dplyr::mutate()`:
+ℹ In argument: `canada_1 = dplyr::na_if(canada_1, "N/A")`.
+Caused by error in `dplyr::na_if()`:
+! Can't convert `y` &lt;character&gt; to match type of `x` &lt;list&gt;.</code></pre>
+<ul>
+<li><code>canada_1</code> is a <strong>list column</strong>, not a plain character or numeric vector and “N/A” is a <strong>character string</strong>.</li>
+<li><code>na_if()</code> expects both <code>x</code> and <code>y</code> to be <strong>the same type</strong> (e.g., both character vectors)</li>
+<li>Since <code>canada_1</code> is a list, <code>na_if()</code> can’t compare or replace values the way we want.</li>
+</ul>
+</div>
+</div>
+</div>
+<p>We will need first <strong>simplify or flatten</strong> the list column into a regular vector using <code>unlist()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># yay, no error!</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>wrangle_dat <span class="ot">&lt;-</span> cn_dat <span class="sc">%&gt;%</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">canada_1 =</span> <span class="fu">unlist</span>(canada_1)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">canada_1 =</span> dplyr<span class="sc">::</span><span class="fu">na_if</span>(canada_1, <span class="st">"N/A"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Okay! Before we could reshape the data with <code>tidyr::pivot_longer()</code>, we had to do a few important data wrangling steps to get things into shape.</p>
+<p>Below is what those steps look like <strong>chained together in a single pipe sequence.</strong> It’s so important to <strong>check the state of your data frame</strong> after each transformation, so don’t hesitate to <code>View()</code> or <code>glimpse()</code> between steps to make sure things are being wrangled the way you expect.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>long_dat <span class="ot">&lt;-</span> cn_dat <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># flatten list columns to atomic vector; check the class</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">canada_1 =</span> <span class="fu">unlist</span>(canada_1)) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mexico_2 =</span> <span class="fu">unlist</span>(mexico_2)) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># replace "N/A" strings with true `NA` values; check the class</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">canada_1 =</span> <span class="fu">na_if</span>(canada_1, <span class="st">"N/A"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mexico_2 =</span> <span class="fu">na_if</span>(mexico_2, <span class="st">"N/A"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># convert character values to numeric; check the class</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">canada_1 =</span> <span class="fu">as.numeric</span>(canada_1),</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">mexico_2 =</span> <span class="fu">as.numeric</span>(mexico_2)) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># reshape from wide to long format</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span>x1,</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"country"</span>,</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"value"</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This piped sequence <em>also</em> works! We do receive a warning, but that’s okay as long as we understand what it means and how it affects our data.</p>
+<p>In this case, the warning is telling us that some values couldn’t be converted to numeric and were turned into <code>NA</code>s. If we’re expecting that (e.g., we know there’s a “N/A” string or other non-numeric text), then the warning is just a helpful heads-up—not a blocker.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>long_dat <span class="ot">&lt;-</span> cn_dat <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># convert list cols to numeric (introduces NAs) </span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">canada_1 =</span> <span class="fu">as.numeric</span>(canada_1),</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">mexico_2 =</span> <span class="fu">as.numeric</span>(mexico_2)) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># reshape from wide to long format</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span>x1,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"country"</span>,</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"value"</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There were 2 warnings in `mutate()`.
+The first warning was:
+ℹ In argument: `canada_1 = as.numeric(canada_1)`.
+Caused by warning:
+! NAs introduced by coercion
+ℹ Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</code></pre>
+</div>
+</div>
+</section>
+<section id="reshape-data-from-long-to-wide" class="level3">
+<h3 class="anchored" data-anchor-id="reshape-data-from-long-to-wide">Reshape data from long to wide</h3>
+<p>The next step is to reshape the data to wide format by turning the unique values in the <code>x1</code> column into their own columns, using the corresponding values to fill in the cells. This is useful when you want each unique value in <code>x1</code> to become a separate variable in your dataset.</p>
+<p>We’ll use <code>tidyr::pivot_wider()</code> for this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>wider_dat <span class="ot">&lt;-</span> long_dat <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> x1,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> value</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We’re getting closer to a tidy data frame! As we discussed earlier, including spaces in column names isn’t ideal and it can lead to messy code and hard-to-read syntax. To clean things up, we’ll use <code>janitor::clean_names()</code> once more to quickly format all our column names into lowercase snake_case.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>wider_dat <span class="ot">&lt;-</span> wider_dat <span class="sc">%&gt;%</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="wrangling-strings-and-adding-columns" class="level3">
+<h3 class="anchored" data-anchor-id="wrangling-strings-and-adding-columns">Wrangling strings and adding columns</h3>
+<p>We technically now have a tidy data frame (yay!) that meets the tidy data principles, where each column is a variable and each row is an observation.</p>
+<p>However, there’s still a bit of data cleaning we can do to make any future visualizations or analyses go more smoothly and yield more accurate results.</p>
+<p>Specifically, the <code>country</code> column contains inconsistent naming — some values are all lowercase, some include underscores, and some are oddly formatted.</p>
+<p>Let’s clean this up by first standardizing the values with <code>dplyr::case_when()</code>, and then formatting them nicely using <code>stringr::str_to_title()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>tidy_dat <span class="ot">&lt;-</span> wider_dat <span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">country =</span> dplyr<span class="sc">::</span><span class="fu">case_when</span>(</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>      country <span class="sc">==</span> <span class="st">"u_k"</span> <span class="sc">~</span> <span class="st">"united kingdom"</span>,</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>      country <span class="sc">==</span> <span class="st">"u_s"</span> <span class="sc">~</span> <span class="st">"united states"</span>,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>      country <span class="sc">==</span> <span class="st">"canada_1"</span> <span class="sc">~</span> <span class="st">"canada"</span>,</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>      country <span class="sc">==</span> <span class="st">"mexico_2"</span> <span class="sc">~</span> <span class="st">"mexico"</span>,</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> country</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> stringr<span class="sc">::</span><span class="fu">str_to_title</span>(<span class="at">string =</span> country))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The final step in our wrangling process is to add a new column, <code>year</code>, to our data frame.</p>
+<p>Why? Upon further investigation, we discovered that the odd formatting in the country column, specifically for Canada and Mexico, actually referred to footnotes in the original data source. These footnotes indicated that the values for these two countries don’t come from 1997 like the others. Instead:</p>
+<ul>
+<li>Canada’s data reflects the year 1990</li>
+<li>Mexico’s data reflects the year 1991</li>
+</ul>
+<p>To ensure our dataset accurately represents these differences (and to avoid misleading interpretations in future analyses) we’ll add a <code>year</code> column to capture this context explicitly.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>tidy_yearly_dat <span class="ot">&lt;-</span> tidy_dat <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">case_when</span>(country <span class="sc">==</span> <span class="st">"Canada"</span> <span class="sc">~</span> <span class="dv">1990</span>, </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                     country <span class="sc">==</span> <span class="st">"Mexico"</span> <span class="sc">~</span> <span class="dv">1991</span>, <span class="cn">TRUE</span> <span class="sc">~</span> <span class="dv">1997</span>),</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.before =</span> country</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="bonus-visualize-the-tidy-data-frame" class="level2">
+<h2 class="anchored" data-anchor-id="bonus-visualize-the-tidy-data-frame">Bonus: Visualize the Tidy Data Frame</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># new column names for table</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>tbl_col_names <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Year"</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Country"</span>,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Total Auto VMT per Capita"</span>,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Autos per Capita"</span>,</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"# of Autos"</span>,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Population"</span>,</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Auto VMT (thousands)"</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="co"># convert `year` to a factor so it's not treated as numeric in `format.args`</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>tbl_dat <span class="ot">&lt;-</span> tidy_yearly_dat <span class="sc">%&gt;%</span> </span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">as.factor</span>(year))</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tbl_dat,</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">col.names =</span> tbl_col_names,</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">align =</span> <span class="st">"c"</span>,</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">format.args =</span> <span class="fu">list</span>(<span class="at">big.mark =</span> <span class="st">","</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">full_width =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: center;" data-quarto-table-cell-role="th">Year</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Country</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Total Auto VMT per Capita</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Autos per Capita</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th"># of Autos</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Population</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Auto VMT (thousands)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1997</td>
+<td style="text-align: center;">Japan</td>
+<td style="text-align: center;">2.368</td>
+<td style="text-align: center;">0.394</td>
+<td style="text-align: center;">49,896,326</td>
+<td style="text-align: center;">126,549,976</td>
+<td style="text-align: center;">299,721,118</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1997</td>
+<td style="text-align: center;">France</td>
+<td style="text-align: center;">4.209</td>
+<td style="text-align: center;">0.463</td>
+<td style="text-align: center;">27,480,000</td>
+<td style="text-align: center;">59,329,691</td>
+<td style="text-align: center;">249,689,411</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1997</td>
+<td style="text-align: center;">Germany</td>
+<td style="text-align: center;">3.961</td>
+<td style="text-align: center;">0.511</td>
+<td style="text-align: center;">42,323,672</td>
+<td style="text-align: center;">82,797,408</td>
+<td style="text-align: center;">327,950,311</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1997</td>
+<td style="text-align: center;">Sweden</td>
+<td style="text-align: center;">3.989</td>
+<td style="text-align: center;">0.436</td>
+<td style="text-align: center;">3,867,000</td>
+<td style="text-align: center;">8,873,052</td>
+<td style="text-align: center;">35,398,758</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1997</td>
+<td style="text-align: center;">United Kingdom</td>
+<td style="text-align: center;">3.967</td>
+<td style="text-align: center;">0.372</td>
+<td style="text-align: center;">22,115,000</td>
+<td style="text-align: center;">59,511,464</td>
+<td style="text-align: center;">236,086,957</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1990</td>
+<td style="text-align: center;">Canada</td>
+<td style="text-align: center;">4.859</td>
+<td style="text-align: center;">0.444</td>
+<td style="text-align: center;">13,887,270</td>
+<td style="text-align: center;">31,281,092</td>
+<td style="text-align: center;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1991</td>
+<td style="text-align: center;">Mexico</td>
+<td style="text-align: center;">0.243</td>
+<td style="text-align: center;">0.098</td>
+<td style="text-align: center;">9,842,006</td>
+<td style="text-align: center;">100,349,766</td>
+<td style="text-align: center;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1997</td>
+<td style="text-align: center;">United States</td>
+<td style="text-align: center;">5.701</td>
+<td style="text-align: center;">0.481</td>
+<td style="text-align: center;">132,432,044</td>
+<td style="text-align: center;">275,562,673</td>
+<td style="text-align: center;">1,570,973,292</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./intro-r-programming.html" class="pagination-link  aria-label=" &lt;span="" to="" r="" programming&lt;="" span&gt;"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intro to R Programming</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./resources.html" class="pagination-link" aria-label="<span class='chapter-number'>5</span>&nbsp; <span class='chapter-title'>Resources</span>">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Resources</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
