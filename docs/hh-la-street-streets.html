@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="LADOT Commerical Rideshare &amp; Mobility">
-<meta name="dcterms.date" content="2025-04-29">
 
-<title>Programmatic Data Processing Essentials for GIS Specialists</title>
+<title>Programmatic Data Processing Essentials for GIS Specialists - 5&nbsp; Hacky Hours Exercise: Los Angeles Street Trees</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,7 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./installation.html" rel="next">
+<link href="./resources.html" rel="next">
+<link href="./cleaning-and-wrangling.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +81,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Overview</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./hh-la-street-streets.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hacky Hours Exercise: Los Angeles Street Trees</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -109,7 +108,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview</span></a>
   </div>
 </li>
@@ -139,8 +138,14 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./hh-la-street-streets.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hacky Hours Exercise: Los Angeles Street Trees</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Resources</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Resources</span></span></a>
   </div>
 </li>
     </ul>
@@ -149,44 +154,21 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a>
-  <ul class="collapse">
-  <li><a href="#goal" id="toc-goal" class="nav-link" data-scroll-target="#goal">🌟 Goal</a></li>
-  <li><a href="#how" id="toc-how" class="nav-link" data-scroll-target="#how">👩🏽‍💻 How</a></li>
-  <li><a href="#motivation" id="toc-motivation" class="nav-link" data-scroll-target="#motivation">💡 Motivation</a></li>
-  </ul></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Programmatic Data Processing Essentials for GIS Specialists</h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hacky Hours Exercise: Los Angeles Street Trees</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>LADOT Commerical Rideshare &amp; Mobility </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">April 29, 2025</p>
-    </div>
-  </div>
   
     
   </div>
@@ -196,30 +178,8 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="overview" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="overview">Overview</h2>
-<section id="goal" class="level3">
-<h3 class="anchored" data-anchor-id="goal">🌟 Goal</h3>
-<p>Equip GIS Specialists with foundational R programming skills to streamline their data cleaning and preparation, enabling more efficient workflows with ArcGIS Pro for spatial analysis and map creation.</p>
-</section>
-<section id="how" class="level3">
-<h3 class="anchored" data-anchor-id="how">👩🏽‍💻 How</h3>
-<p>Participants will learn:</p>
-<ul>
-<li>How to structure R Projects for reproducibility</li>
-<li>Write R code in RStudio</li>
-<li>Apply core <code>tidyverse</code> functions to clean and wrangle messy data</li>
-<li>Explore data visualization using <code>ggplot2</code></li>
-</ul>
-<p>Emphasis will be placed on reshaping data into <strong>tidy data</strong> - a consistent, tabular structure that makes analysis and visualization easier, especially when working with spatial attributes in ArcGIS Pro.</p>
-</section>
-<section id="motivation" class="level3">
-<h3 class="anchored" data-anchor-id="motivation">💡 Motivation</h3>
-<p>Many GIS professionals rely on Excel or manual, one-off methods for preparing spatial data. These processes can be time-consuming, error-prone, and hard to replicate. R programming is a powerful, scriptable, and repeatable way to handle data preparation, saving time and reducing frustration while promoting reproducible workflows that align with data science best practices.</p>
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -611,10 +571,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./cleaning-and-wrangling.html" class="pagination-link  aria-label=" &lt;span="" &amp;="" wrangling&lt;="" span&gt;"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Cleaning &amp; Wrangling</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./installation.html" class="pagination-link" aria-label="<span class='chapter-number'>1</span>&nbsp; <span class='chapter-title'>R &amp; RStudio Installation Guide</span>">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R &amp; RStudio Installation Guide</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./resources.html" class="pagination-link" aria-label="<span class='chapter-number'>6</span>&nbsp; <span class='chapter-title'>Resources</span>">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Resources</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

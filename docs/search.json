@@ -248,5 +248,15 @@
     "crumbs": [
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Resources</span>"
     ]
+  },
+  {
+    "objectID": "cleaning-and-wrangling.html#exporting-data",
+    "href": "cleaning-and-wrangling.html#exporting-data",
+    "title": "Cleaning & Wrangling",
+    "section": "Exporting Data",
+    "text": "Exporting Data\nYay, we have our new tidy data table! It’s ready for analysis and for sharing. To export a table created in R, we use the readr::write_*() family of functions. The readr package provides several options for saving data in different file formats.\nIn the code chunk below, we use write_csv() to save our tidy data table as a .csv file. This function takes two main arguments:\n\nthe data object you want to save (in this case, tidy_yearly_dat)\nthe file path where you want the file saved (we use here::here() to create a robust and reproducible path across different systems).\n\n\n\n\n\n\n\nAccessing the Help Page\n\n\n\nYou can view the documentation by running ?write_csv or ?readr::write_csv in the Console.\n\n\n\nreadr::write_csv(tidy_yearly_dat,\n                 file = here::here(\"data\", \"tidy_yearly_dat.csv\"))",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Cleaning & Wrangling</span>"
+    ]
   }
 ]

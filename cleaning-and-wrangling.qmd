@@ -440,6 +440,25 @@ tidy_yearly_dat <- tidy_dat %>%
   )
 ```
 
+## Exporting Data
+
+**Yay, we have our new tidy data table!** It’s ready for analysis *and* for sharing. To export a table created in R, we use the `readr::write_*()` family of functions. The `readr` package provides several options for saving data in different file formats.
+
+In the code chunk below, we use `write_csv()` to save our tidy data table as a `.csv` file. This function takes two main arguments:
+
+- the data object you want to save (in this case, `tidy_yearly_dat`)
+- the file path where you want the file saved (we use `here::here()` to create a robust and reproducible path across different systems).
+
+::: {.callout-tip title="Accessing the Help Page"}
+You can view the documentation by running `?write_csv` or `?readr::write_csv` in the Console.
+:::
+
+```{r}
+#| eval: false
+readr::write_csv(tidy_yearly_dat,
+                 file = here::here("data", "tidy_yearly_dat.csv"))
+```
+
 ## Bonus: Visualize the Tidy Data Frame
 
 ```{r}
