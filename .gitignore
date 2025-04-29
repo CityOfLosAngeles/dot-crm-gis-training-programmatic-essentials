@@ -50,3 +50,6 @@ po/*~
 rsconnect/
 
 /.quarto/
+
+# data
+data/
