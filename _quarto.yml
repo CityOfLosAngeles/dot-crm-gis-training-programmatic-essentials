@@ -12,6 +12,7 @@ book:
     - r-projects.qmd
     - intro-r-programming.qmd
     - cleaning-and-wrangling.qmd
+    - hh-exercise-palmer-penguins.qmd
     # - data-viz-ggplot2.qmd
     - resources.qmd
 

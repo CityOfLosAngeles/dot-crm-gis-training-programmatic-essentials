@@ -1,0 +1,206 @@
+---
+title: "Hacky Hours Exercise: Palmer Penguins Practice"
+date: "04/30/2025"
+format:
+  html:
+    number-sections: false
+    code-fold: true
+    code-summary: "Answer"
+---
+
+::: {.callout-note icon=false title="About the Data"}
+The [Palmer Penguins](https://allisonhorst.github.io/palmerpenguins/){target="_blank"} dataset comes from the `palmerpenguins` R package. It was created as an educational alternative to the classic iris dataset and provides real-world data collected by [Dr. Kristen Gorman](https://www.uaf.edu/cfos/people/faculty/detail/kristen-gorman.php){target="_blank"} from the Palmer Station, Antarctica 
+Long Term Ecological Research Network (LTER) site. The dataset includes data for 344 penguins from three different species, collected across three islands in the Palmer Archipelago, Antarctica."
+:::
+
+### 0. Load libraries + data
+
+::: {.callout-tip title="A few reminders:"}
+- **Before you begin, ask yourself**: WHERE AM I?
+- Let your code b r e a t h e, align code vertically, and use a consistent naming convention!
+- Use `#` to create a comment in an R Script
+- Use `----` to create new "headers" in an R Script after a comment
+- Pipe Operator shortcut: `Ctrl` + `Shift` + M
+:::
+
+Install the R package `palmerpenguins`, if you haven't already:
+
+```{r}
+#| eval: false
+#| code-fold: false
+
+install.packages("palmerpenguins")
+```
+
+These are following libraries we'll use for these exercises:
+
+```{r}
+#| code-fold: false
+#| message: false
+
+library(palmerpenguins) # access penguins data
+library(skimr) # summarize data
+library(tidyr) # allows us to use the pipe (%>%)
+library(dplyr) # cleaning and wrangling functions
+```
+
+Access the penguin data by referencing `penguins` from the `palmerpenguins` package in your code or function arguments.
+
+Use `palmerpenguins::penguins` to access the dataset directly from the `palmerpenguins` package without loading the package with `library()`.
+
+```{r}
+#| eval: false
+#| code-fold: false
+# if package is loaded:
+View(penguins)
+
+# without loading package:
+View(palmerpenguins::penguins)
+```
+
+
+### 1. Explore your data
+
+Call the following functions **in the Console** to get familiar with and explore your data:
+
+```{r}
+#| eval: false
+#| code-fold: false
+
+View() # opens data as a spreadsheet-style data viewer in the Source Pane
+skimr::skim() # alternative to `summary()` providing broad overview of dataframe
+names() # prints out all the names of an object
+head() # returns first 6 rows of df; useful for large data
+str() # returns structure of an R object; another alt to `summary()`
+glimpse() # alt to `str()`; may be more readable for you
+unique() # use in combo w/ subset operator ($) to see unique values in a column
+dim() # returns dimensions (# rows, # cols) of df or use `nrow()` or `ncol()`
+anyNA() # check for NAs
+colSums(is.na()) # counts number of NAs in each column
+```
+
+### 2. Subsetting 
+
+::: {.callout-warning icon=false title="Exercise A"}
+Create a new R object called `annual_penguins`and use `dplyr::select()` to create a subset containing the columns: `species`, `island`, `sex`, and `year`.
+:::
+
+```{r}
+annual_penguins <- penguins %>% 
+  select(species,
+         island,
+         sex,
+         year)
+```
+
+::: {.callout-warning icon=false title="Exercise B"}
+In the `annual_penguins` data frame, use `dplyr::filter()` to create a subset containing only female penguins. You come up with a new object name!
+:::
+
+```{r}
+female_penguins <- annual_penguins %>% 
+  filter(sex == "female")
+```
+
+::: {.callout-warning icon=false title="Exercise C"}
+Starting from the data frame you created in Exercise B, use `filter()` to further narrow or subset the data to only Adelie penguins.
+:::
+
+```{r}
+female_adelie_penguins <- annual_penguins %>% 
+  filter(sex == "female" & species == "Adelie")
+
+# this is also valid
+female_adelie_penguins <- annual_penguins %>% 
+  filter(sex == "female") %>% 
+  filter(species == "Adelie")
+
+# ~ Note: ~ #
+# You can combine multiple conditions inside a single `filter()` using & (and), or you can chain multiple `filter()` calls using the pipe (%>%). 
+# Both approaches produce the same result.
+# Chaining filters can sometimes improve readability, especially when applying several filtering steps
+```
+
+### 3. Calculating
+
+::: {.callout-warning icon=false title="Exercise A"}
+Create a new column using `dplyr::mutate()` that is the ratio of bill length to bill depth. Hint: Ratio = bill_length_mm / bill_depth_mm
+:::
+
+```{r}
+penguins_bill_ratio <- penguins %>% 
+  mutate(bill_ratio = bill_length_mm / bill_depth_mm,
+         .after = bill_depth_mm)
+
+# ~ Note ~ #
+# Recall we can use `.after` or `.before` to specify the new col position
+```
+
+::: {.callout-warning icon=false title="Exercise B"}
+Calculate the mean body mass (in grams) for each penguin species. To do this, you will be using two new functions: `dplyr::group_by()` and `dplyr::summarize()`. 
+
+Use the `?group_by` and `?summarise` Help Pages or search online for examples if you get stuck.
+
+The result should be a summary table with one row per species and the average body mass for each.
+:::
+
+::: {.callout-note title="summarize() vs summarise()" collapse=true}
+You might notice that `dplyr` also has the function `summarise()`. Both `summarise()` and `summarize()` work exactly the same and are aliases for each other. The only difference is American vs English spelling - whichever one you use, be consistent!
+:::
+
+```{r}
+penguins_mean_body_mass <- penguins %>%
+  group_by(species) %>%
+  summarize(mean_body_mass_g = mean(body_mass_g, na.rm = TRUE))
+
+# ~ Reflections ~ # 
+# How do the species compare in terms of average body mass?
+# What happens if you only run the `group_by()` line without summarizing?
+# We use `na.rm = TRUE` to ignore missing values. What happens if we don’t include it?
+```
+
+
+::: {.callout-warning icon=false title="Exercise C"}
+Calculate the average flipper length in millimeters for penguins on each island. Again, you will be using the functions: `dplyr::group_by()` and `dplyr::summarize()`. 
+
+The result should be a summary table with one row per species and the average flipper length in millimeters for each.
+:::
+
+```{r}
+mean_flipper_length_by_island <- penguins %>%
+  group_by(island) %>%
+  summarize(mean_flipper_length_mm = mean(flipper_length_mm, na.rm = TRUE))
+
+# ~ Reflections ~ # 
+# How does flipper length compare across islands?
+# How would the result change if you grouped by species instead of island?
+```
+
+### 4. Enhancing (Transforming)
+
+::: {.callout-warning icon=false title="Exercise A"}
+Consider what you learned about the size of the penguins from Exercises B & C from the Calculating section.
+
+Add a new column called `size` that categorizes each penguin as "small", "medium", or "large" based on its species. Use `mutate()` and `case_when()` from `dplyr`.
+:::
+
+```{r}
+enhanced_penguins <- penguins %>%
+  mutate(size = case_when(
+    species == "Adelie" ~ "small",
+    species == "Chinstrap" ~ "medium",
+    species == "Gentoo" ~ "large",
+    TRUE ~ NA_character_  # all other species get value of NA
+  ))
+
+# ~ Note ~ #
+# `NA` is used for missing values
+# `NA_character_` is used when working with character columns to ensure the type of missing value is consistent with the column's data type 
+# With `NA`, the data type is assumed to be logical and could result in an error
+```
+
+
+
+
+
+

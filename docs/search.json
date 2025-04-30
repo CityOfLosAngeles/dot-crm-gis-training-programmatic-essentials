@@ -206,7 +206,7 @@
     "section": "",
     "text": "Online Books",
     "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Resources</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Resources</span>"
     ]
   },
   {
@@ -216,7 +216,7 @@
     "section": "",
     "text": "R for Data Science (2e) by Hadley Wickham, Mine Çetinkaya-Rundel & Garrett Grolemund\nPython4DS by Arthur Turrell, et al.\nNational Center for Ecological Analysis & Snythesis (NCEAS) Training Materials Catalog",
     "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Resources</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Resources</span>"
     ]
   },
   {
@@ -226,7 +226,7 @@
     "section": "Blogs, Bloggers & Papers - Oh my!",
     "text": "Blogs, Bloggers & Papers - Oh my!\n\nTidy data by Hadley Wickham published in The Journal of Statistical Software, vol. 59, 2014.\n\nTL;DR version on the Comprehensive R Archive Network (CRAN)\n\nFrom Data to Viz\nColor Brewer 2.0\nSam Shanny-Csik\nData is Plural\n3 Minutes Wednesdays\nAllison Horst\nAlison Hill\nDanielle Navarro\nBeatriz Milz",
     "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Resources</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Resources</span>"
     ]
   },
   {
@@ -236,7 +236,7 @@
     "section": "Communities",
     "text": "Communities\n\nR-Ladies Los Angeles Meetup\nMinorities in R (MiR) Slack Community\nTidyTuesday Community Activity hosted by Data Science Learning Community\nOpenscapes\nROpenSci",
     "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Resources</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Resources</span>"
     ]
   },
   {
@@ -246,7 +246,7 @@
     "section": "Cheatsheets",
     "text": "Cheatsheets\n\nPosit Cheatsheets\nReproducibility Checklist",
     "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Resources</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Resources</span>"
     ]
   },
   {
@@ -257,6 +257,16 @@
     "text": "Exporting Data\nYay, we have our new tidy data table! It’s ready for analysis and for sharing. To export a table created in R, we use the readr::write_*() family of functions. The readr package provides several options for saving data in different file formats.\nIn the code chunk below, we use write_csv() to save our tidy data table as a .csv file. This function takes two main arguments:\n\nthe data object you want to save (in this case, tidy_yearly_dat)\nthe file path where you want the file saved (we use here::here() to create a robust and reproducible path across different systems).\n\n\n\n\n\n\n\nAccessing the Help Page\n\n\n\nYou can view the documentation by running ?write_csv or ?readr::write_csv in the Console.\n\n\n\nreadr::write_csv(tidy_yearly_dat,\n                 file = here::here(\"data\", \"tidy_yearly_dat.csv\"))",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Cleaning & Wrangling</span>"
+    ]
+  },
+  {
+    "objectID": "hh-exercise-palmer-penguins.html",
+    "href": "hh-exercise-palmer-penguins.html",
+    "title": "Hacky Hours Exercise: Palmer Penguins Practice",
+    "section": "",
+    "text": "About the Data\n\n\n\nThe Palmer Penguins dataset comes from the palmerpenguins R package. It was created as an educational alternative to the classic iris dataset and provides real-world data collected by Dr. Kristen Gorman from the Palmer Station, Antarctica Long Term Ecological Research Network (LTER) site. The dataset includes data for 344 penguins from three different species, collected across three islands in the Palmer Archipelago, Antarctica.”\n\n\n\n0. Load libraries + data\n\n\n\n\n\n\nA few reminders:\n\n\n\n\nBefore you begin, ask yourself: WHERE AM I?\nLet your code b r e a t h e, align code vertically, and use a consistent naming convention!\nUse # to create a comment in an R Script\nUse ---- to create new “headers” in an R Script after a comment\nPipe Operator shortcut: Ctrl + Shift + M\n\n\n\nInstall the R package palmerpenguins, if you haven’t already:\n\ninstall.packages(\"palmerpenguins\")\n\nThese are following libraries we’ll use for these exercises:\n\nlibrary(palmerpenguins) # access penguins data\nlibrary(skimr) # summarize data\nlibrary(tidyr) # allows us to use the pipe (%&gt;%)\nlibrary(dplyr) # cleaning and wrangling functions\n\nAccess the penguin data by referencing penguins from the palmerpenguins package in your code or function arguments.\nUse palmerpenguins::penguins to access the dataset directly from the palmerpenguins package without loading the package with library().\n\n# if package is loaded:\nView(penguins)\n\n# without loading package:\nView(palmerpenguins::penguins)\n\n\n\n1. Explore your data\nCall the following functions in the Console to get familiar with and explore your data:\n\nView() # opens data as a spreadsheet-style data viewer in the Source Pane\nskimr::skim() # alternative to `summary()` providing broad overview of dataframe\nnames() # prints out all the names of an object\nhead() # returns first 6 rows of df; useful for large data\nstr() # returns structure of an R object; another alt to `summary()`\nglimpse() # alt to `str()`; may be more readable for you\nunique() # use in combo w/ subset operator ($) to see unique values in a column\ndim() # returns dimensions (# rows, # cols) of df or use `nrow()` or `ncol()`\nanyNA() # check for NAs\ncolSums(is.na()) # counts number of NAs in each column\n\n\n\n2. Subsetting\n\n\n\n\n\n\nExercise A\n\n\n\nCreate a new R object called annual_penguinsand use dplyr::select() to create a subset containing the columns: species, island, sex, and year.\n\n\n\n\nAnswer\nannual_penguins &lt;- penguins %&gt;% \n  select(species,\n         island,\n         sex,\n         year)\n\n\n\n\n\n\n\n\nExercise B\n\n\n\nIn the annual_penguins data frame, use dplyr::filter() to create a subset containing only female penguins. You come up with a new object name!\n\n\n\n\nAnswer\nfemale_penguins &lt;- annual_penguins %&gt;% \n  filter(sex == \"female\")\n\n\n\n\n\n\n\n\nExercise C\n\n\n\nStarting from the data frame you created in Exercise B, use filter() to further narrow or subset the data to only Adelie penguins.\n\n\n\n\nAnswer\nfemale_adelie_penguins &lt;- annual_penguins %&gt;% \n  filter(sex == \"female\" & species == \"Adelie\")\n\n# this is also valid\nfemale_adelie_penguins &lt;- annual_penguins %&gt;% \n  filter(sex == \"female\") %&gt;% \n  filter(species == \"Adelie\")\n\n# ~ Note: ~ #\n# You can combine multiple conditions inside a single `filter()` using & (and), or you can chain multiple `filter()` calls using the pipe (%&gt;%). \n# Both approaches produce the same result.\n# Chaining filters can sometimes improve readability, especially when applying several filtering steps\n\n\n\n\n3. Calculating\n\n\n\n\n\n\nExercise A\n\n\n\nCreate a new column using dplyr::mutate() that is the ratio of bill length to bill depth. Hint: Ratio = bill_length_mm / bill_depth_mm\n\n\n\n\nAnswer\npenguins_bill_ratio &lt;- penguins %&gt;% \n  mutate(bill_ratio = bill_length_mm / bill_depth_mm,\n         .after = bill_depth_mm)\n\n# ~ Note ~ #\n# Recall we can use `.after` or `.before` to specify the new col position\n\n\n\n\n\n\n\n\nExercise B\n\n\n\nCalculate the mean body mass (in grams) for each penguin species. To do this, you will be using two new functions: dplyr::group_by() and dplyr::summarize().\nUse the ?group_by and ?summarise Help Pages or search online for examples if you get stuck.\nThe result should be a summary table with one row per species and the average body mass for each.\n\n\n\n\n\n\n\n\nsummarize() vs summarise()\n\n\n\n\n\nYou might notice that dplyr also has the function summarise(). Both summarise() and summarize() work exactly the same and are aliases for each other. The only difference is American vs English spelling - whichever one you use, be consistent!\n\n\n\n\n\nAnswer\npenguins_mean_body_mass &lt;- penguins %&gt;%\n  group_by(species) %&gt;%\n  summarize(mean_body_mass_g = mean(body_mass_g, na.rm = TRUE))\n\n# ~ Reflections ~ # \n# How do the species compare in terms of average body mass?\n# What happens if you only run the `group_by()` line without summarizing?\n# We use `na.rm = TRUE` to ignore missing values. What happens if we don’t include it?\n\n\n\n\n\n\n\n\nExercise C\n\n\n\nCalculate the average flipper length in millimeters for penguins on each island. Again, you will be using the functions: dplyr::group_by() and dplyr::summarize().\nThe result should be a summary table with one row per species and the average flipper length in millimeters for each.\n\n\n\n\nAnswer\nmean_flipper_length_by_island &lt;- penguins %&gt;%\n  group_by(island) %&gt;%\n  summarize(mean_flipper_length_mm = mean(flipper_length_mm, na.rm = TRUE))\n\n# ~ Reflections ~ # \n# How does flipper length compare across islands?\n# How would the result change if you grouped by species instead of island?\n\n\n\n\n4. Enhancing (Transforming)\n\n\n\n\n\n\nExercise A\n\n\n\nConsider what you learned about the size of the penguins from Exercises B & C from the Calculating section.\nAdd a new column called size that categorizes each penguin as “small”, “medium”, or “large” based on its species. Use mutate() and case_when() from dplyr.\n\n\n\n\nAnswer\nenhanced_penguins &lt;- penguins %&gt;%\n  mutate(size = case_when(\n    species == \"Adelie\" ~ \"small\",\n    species == \"Chinstrap\" ~ \"medium\",\n    species == \"Gentoo\" ~ \"large\",\n    TRUE ~ NA_character_  # all other species get value of NA\n  ))\n\n# ~ Note ~ #\n# `NA` is used for missing values\n# `NA_character_` is used when working with character columns to ensure the type of missing value is consistent with the column's data type \n# With `NA`, the data type is assumed to be logical and could result in an error",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Hacky Hours Exercise: Palmer Penguins Practice</span>"
     ]
   }
 ]
