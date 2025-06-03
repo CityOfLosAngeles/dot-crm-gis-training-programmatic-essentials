@@ -37,14 +37,19 @@ Image Credit: [Exploratory Data Analysis in R](https://mgimond.github.io/ES218/)
 
 - **New install:** To install RStudio, visit [posit.co/downloads/](https://posit.co/downloads/){target="_blank"}. Download the free (“Open Source Edition”) Desktop version for your operating system. Be sure to install the most up-to-date version available.
 
-<!---
-- **Update:** If you already have RStudio and need to update, open RStudio, and under *Help* (in the top menu), choose *Check for updates*. If you have the most recent release, it will return *No update available. You are running the most recent version of RStudio*. Otherwise, you should follow the instructions to install an updated version.
---->
-
 - **Launch RStudio:** Ensure RStudio opens and is running properly.
 
+::: {#tip-install-rtools .callout-tip collapse=false}
+### Windows Users: You may need to install RTools
+
+**If you see a warning message after running `install.packages()`, install RTools.**
+
+- **To install RTools,** visit [https://cran.r-project.org/bin/windows/Rtools/](https://cran.r-project.org/bin/windows/Rtools/){target="_blank"} and select the version based on the RStudio version you're running. 
+    - **Note:** If you have an older version of RTools already downloaded on your computer, you may be prompted to delete it first.
+:::
+
 ::: {.callout-tip collapse=true}
-## Mac Users: You may need to install command line tools and XQuartz. 
+### Mac Users: You may need to install command line tools and XQuartz. 
    
 **If RStudio prompts you to install Command Line Tools upon opening, go ahead and install them.**
 
@@ -54,8 +59,54 @@ Image Credit: [Exploratory Data Analysis in R](https://mgimond.github.io/ES218/)
 *Windows users: Windows machines should already have command line tools installed, and XQuartz is only required for Macs.*
 :::
 
+## 3. Updating RStudio
+
+If you already have RStudio and need to update, open RStudio, and under *Help* (in the top menu), choose *Check for updates*. If you have the most recent release, it will return *No update available. You are running the most recent version of RStudio*. Otherwise, you should follow the instructions to install an updated version.
+
+You can also find the most up-to-date release of RStudio available for download at [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/).
+
+You might need to update your RTools as well, see @tip-install-rtools.
+
+### Check that you have the right RStudio Version running
+
+After installing the update, open RStudio and look at your Console to see what version is running:
+
+```{r}
+#| echo: false
+#| fig-align: "center"
+
+knitr::include_graphics("images/1_updating_rstudio.png")
+```
+
+If you notice an older version is running, go to Tools in the top menu bar and click "Global Options":
+
+```{r}
+#| echo: false
+#| fig-align: "center"
+
+knitr::include_graphics("images/2_updating_rstudio.png")
+```
+
+In the Global Options window, make sure you're in General and click the "Change" button next to the "R version" field under the "R Sessions" header:
+
+```{r}
+#| echo: false
+#| fig-align: "center"
+
+knitr::include_graphics("images/3_updating_rstudio.png")
+```
+
+The "Choose R Installation" window will appear, and you can either choose the default option or you can specify a specific version of R. Either one works, then click "Ok". You'll be told to quit and restart RStudio for the changes to go into effect.
+
+```{r}
+#| echo: false
+#| fig-align: "center"
+
+knitr::include_graphics("images/4_updating_rstudio.png")
+```
+
 <!---
-### 3. Install Quarto *if necessary* (automatically installed with RStudio) {#Quarto}
+### 4. Install Quarto *if necessary* (automatically installed with RStudio) {#Quarto}
 
 Quarto is a scientific publishing tool built on Pandoc that allows R, Python, Julia, and ObservableJS users to create dynamic documents, websites, books and more.  
 
